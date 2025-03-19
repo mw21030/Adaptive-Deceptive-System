@@ -8,7 +8,7 @@
         <ProductCode>21</ProductCode>
     </device_info>
 
-    <mode>tcp</mode>
+    <mode>udp</mode>
     <latency>0.1</latency>
     <timeout>20</timeout>
 
