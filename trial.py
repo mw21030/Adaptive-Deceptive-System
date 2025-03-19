@@ -1,6 +1,8 @@
 import time
 import re
 import os 
+import subprocess
+import datetime
 
 # Tail the log file to check any update on incoming traffic
 def tail_conpot(filename):
@@ -40,9 +42,23 @@ def process_line(line):
         print(f"Detected ENIP scan on port {port}")
 
 if __name__ == "__main__":
-    dir_path = os.getcwd()
-    log_file = dir_path + "/conpot.log"  # Update this with the actual path to your conpot.log file
-    print("Starting to tail log file for scanning activity...")
-    print(log_file)
-    for log_line in tail_f(log_file):
-        process_line(log_line)     
+    try:
+        dir_path = os.getcwd()
+        log_file = dir_path + "/conpot.log"  # Update this with the actual path to your conpot.log file
+        template = dir_path + "/conpot_profiles/Base_profiles/S7-1200"
+        base_process = subprocess.Popen(
+        ["conpot -f --template ", template],
+        stdout=subprocess.DEVNULL,  # Redirect stdout if you don't want terminal output
+        stderr=subprocess.DEVNULL   # Redirect stderr as well
+        )
+        print("Starting to tail log file for scanning activity...")
+        print(log_file)
+        for log_line in tail_conpot(log_file):
+            process_line(log_line)     
+    except KeyboardInterrupt:
+        base_process.terminate()
+        print("Exiting Conpot...")
+        log_folder = dir_path + "/log"
+        if not os.path.exists(log_folder):
+            os.makedirs(log_folder)
+        subprocess.run(["mv", log_file, log_folder+ "/" +"log_"+ datetime.now().strftime("%Y%m%d_%H%M%S") + ".log"])        
