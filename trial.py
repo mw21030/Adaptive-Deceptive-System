@@ -47,24 +47,26 @@ def process_line(line):
         print(f"Detected ENIP scan on port {port}")
 def turn_on_conpot():
     dir_path = os.getcwd()
-    templates_path = dir_path + "/conpot_profiles/Base_profiles"
-    template = dir_path + "/conpot_profiles/Base_profiles/S7-1200"
-    base_process = subprocess.Popen(["conpot", "-f", "--template", template], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    return base_process
+    template1 = dir_path + "/conpot_profiles/Base_profiles/S7-1200"
+    S7_process = subprocess.Popen(["conpot", "-f", "--template", template1], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    template2 = dir_path + "/conpot_profiles/Base_profiles/modbus_trial"
+    Modbus_process2 = subprocess.Popen(["conpot", "-f", "--template", template2], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    template3 = dir_path + "/conpot_profiles/Base_profiles/enip_trial"
+    enip_process = subprocess.Popen(["conpot", "-f", "--template", template3], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+def turn_off_conpot():
+    subprocess.run(["pkill", "conpot"])
 if __name__ == "__main__":
     try:
         dir_path = os.getcwd()
         log_file = dir_path + "/conpot.log"  # Update this with the actual path to your conpot.log file
-        template = dir_path + "/conpot_profiles/Base_profiles/S7-1200"
-
-        base_process = subprocess.Popen(["conpot", "-f", "--template", template], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        turn_on_conpot()
         print("Starting to tail log file for scanning activity...")
         print(log_file)
         for log_line in tail_conpot(log_file):
             process_line(log_line)     
     except (KeyboardInterrupt, Exception) as e:
-        base_process.kill()
+        turn_off_conpot()
         print(f"Exiting Conpot due to: {e}")
         log_folder = dir_path + "/log"
         if not os.path.exists(log_folder):
