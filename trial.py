@@ -45,12 +45,19 @@ def process_line(line):
     if enip_match:
         port = enip_match.group(1)
         print(f"Detected ENIP scan on port {port}")
+def turn_on_conpot():
+    dir_path = os.getcwd()
+    templates_path = dir_path + "/conpot_profiles/Base_profiles"
+    template = dir_path + "/conpot_profiles/Base_profiles/S7-1200"
+    base_process = subprocess.Popen(["conpot", "-f", "--template", template], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    return base_process
 
 if __name__ == "__main__":
     try:
         dir_path = os.getcwd()
         log_file = dir_path + "/conpot.log"  # Update this with the actual path to your conpot.log file
         template = dir_path + "/conpot_profiles/Base_profiles/S7-1200"
+
         base_process = subprocess.Popen(["conpot", "-f", "--template", template], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         print("Starting to tail log file for scanning activity...")
         print(log_file)

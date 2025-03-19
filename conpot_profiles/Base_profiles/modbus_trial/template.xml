@@ -7,7 +7,6 @@
         <entity name="creator">Modbus</entity>
     </template>
     <databus>
-        <!-- Core value that can be retrieved from the databus by key -->
         <key_value_mappings>
           <key name="SystemName">
               <value type="value">"Technodrome"</value>
