@@ -56,12 +56,12 @@ if __name__ == "__main__":
         print(log_file)
         for log_line in tail_conpot(log_file):
             process_line(log_line)     
-    except KeyboardInterrupt:
-        base_process.terminate()
-        print("Exiting Conpot...")
+    except (KeyboardInterrupt, Exception) as e:
+        base_process.kill()
+        print(f"Exiting Conpot due to: {e}")
         log_folder = dir_path + "/log"
         if not os.path.exists(log_folder):
             os.makedirs(log_folder)
-        subprocess.run(["cp", log_file, log_folder+ "/" +"log_"+ datetime.now().strftime("%Y%m%d_%H%M%S") + ".log"])
+        subprocess.run(["cp", log_file, log_folder + "/" + "log_" + datetime.now().strftime("%Y%m%d_%H%M%S") + ".log"])
         open('conpot.log', 'w').close()
         print("Log file moved to log folder")
