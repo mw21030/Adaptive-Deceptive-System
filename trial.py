@@ -31,7 +31,7 @@ def process_line(line):
         Port = port_scan.group(1)
         IP = port_scan.group(2)
         session_id = port_scan.group(3)
-        print(f"{Port} scan from {IP}:{attacker_port} with session ID {session_id}")
+        print(f"{Port} scan from {IP} with session ID {session_id}")
     elif enip_on:
         PID = enip_on.group(1)
         IP = enip_on.group(2)
