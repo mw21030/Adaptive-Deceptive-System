@@ -16,12 +16,17 @@ def tail_conpot(filename):
 
 def process_line(line):
     # For Modbus scan:
-    modbus_on = re.search(r"Modbus server started on:\s+\('([\d.]+)',\s*(\d+)\)", line)
+    port_on = re.search(r"\*? server started on:\s+\('([\d.]+)',\s*(\d+)\)", line)
     modbus_scan = re.search(r"New Modbus connection from\s+([\d.]+):(\d+)\.\s+\(([a-fA-F0-9\-]+)\)", line)
-    if modbus_on:
-        IP = modbus_on.group(1)
-        port = modbus_on.group(2)
-        print(f"Modpus on from {IP}:{port}")
+    if port_on:
+        IP = port_on.group(1)
+        port = port_on.group(2)
+        if port == "502":
+            print(f"Modbus on from {IP}:{port}")
+        elif port == "102":
+            print(f"S7comm on from {IP}:{port}")
+        elif port == "44818":
+            print(f"ENIP on from {IP}:{port}")
     elif modbus_scan:
         IP = modbus_scan.group(1)
         port = modbus_scan.group(2)
@@ -29,7 +34,7 @@ def process_line(line):
         print(f"Modbus scan from {IP}:{port} with session ID {session_id}")
 
     # For S7Comm scan:
-    s7_match = re.search(r"new s7comm session from\s+([\d.]+)", line, re.IGNORECASE)
+    s7_match = re.search(r"Modbus server started on:\s+\('([\d.]+)',\s*(\d+)\)", line)
     if s7_match:
         ip = s7_match.group(1)
         print(f"Detected S7Comm scan from IP {ip}")
