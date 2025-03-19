@@ -57,4 +57,6 @@ if __name__ == "__main__":
         log_folder = dir_path + "/log"
         if not os.path.exists(log_folder):
             os.makedirs(log_folder)
-        subprocess.run(["mv", log_file, log_folder+ "/" +"log_"+ datetime.now().strftime("%Y%m%d_%H%M%S") + ".log"])        
+        subprocess.run(["mv", log_file, log_folder+ "/" +"log_"+ datetime.now().strftime("%Y%m%d_%H%M%S") + ".log"])
+        subprocess.run(["mk conpot.log"])        
+        print("Log file moved to log folder")
