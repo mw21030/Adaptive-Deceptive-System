@@ -15,9 +15,11 @@ def tail_conpot(filename):
             yield line
 
 def process_line(line):
-    # For Modbus scan:
+    # For Modbus/S7comm scan:
     port_on = re.search(r"\*? server started on:\s+\('([\d.]+)',\s*(\d+)\)", line)
-    modbus_scan = re.search(r"New Modbus connection from\s+([\d.]+):(\d+)\.\s+\(([a-fA-F0-9\-]+)\)", line)
+    port_scan = re.search(r"New ([\d.]+) connection from\s+([\d.]+):(\d+)\.\s+\(([a-fA-F0-9\-]+)\)", line)
+    enip_on = re.search(r"handle server PID \[\s*(\d+)\s*\] starting on \('([\d.]+)',\s*(\d+)\)", line)
+    enip_scan = re.search(r"EtherNet/IP CIP Request\s+\(Client\s+\('([\d.]+)',\s*(\d+)\)\):", line)
     if port_on:
         IP = port_on.group(1)
         port = port_on.group(2)
@@ -25,26 +27,22 @@ def process_line(line):
             print(f"Modbus on from {IP}:{port}")
         elif port == "102":
             print(f"S7comm on from {IP}:{port}")
-        elif port == "44818":
-            print(f"ENIP on from {IP}:{port}")
-    elif modbus_scan:
-        IP = modbus_scan.group(1)
-        port = modbus_scan.group(2)
-        session_id = modbus_scan.group(3)
-        print(f"Modbus scan from {IP}:{port} with session ID {session_id}")
+    elif port_scan:
+        Port = port_scan.group(1)
+        IP = port_scan.group(2)
+        attacker_port = port_scan.group(3)
+        session_id = port_scan.group(4)
+        print(f"{Port} scan from {IP}:{attacker_port} with session ID {session_id}")
+    elif enip_on:
+        PID = enip_on.group(1)
+        IP = enip_on.group(2)
+        port = enip_on.group(3)
+        print(f"ENIP on from {IP}:{port} with PID {PID}")
+    elif enip_scan:
+        IP = enip_scan.group(1)
+        port = enip_scan.group(2)
+        print(f"ENIP scan from {IP}:{port}")
 
-    # For S7Comm scan:
-    s7_match = re.search(r"Modbus server started on:\s+\('([\d.]+)',\s*(\d+)\)", line)
-    if s7_match:
-        ip = s7_match.group(1)
-        print(f"Detected S7Comm scan from IP {ip}")
-
-
-    # For ENIP scan:
-    enip_match = re.search(r"ENIP .*?on:\s+\(.*?,\s*(\d+)\)", line)
-    if enip_match:
-        port = enip_match.group(1)
-        print(f"Detected ENIP scan on port {port}")
 def turn_on_conpot():
     dir_path = os.getcwd()
     template1 = dir_path + "/conpot_profiles/Base_profiles/S7-1200"
