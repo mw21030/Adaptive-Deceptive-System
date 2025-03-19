@@ -46,11 +46,8 @@ if __name__ == "__main__":
         dir_path = os.getcwd()
         log_file = dir_path + "/conpot.log"  # Update this with the actual path to your conpot.log file
         template = dir_path + "/conpot_profiles/Base_profiles/S7-1200"
-        base_process = subprocess.Popen(
-        ["conpot -f --template ", template],
-        stdout=subprocess.DEVNULL,  # Redirect stdout if you don't want terminal output
-        stderr=subprocess.DEVNULL   # Redirect stderr as well
-        )
+        base_process = subprocess.run(
+        ["conpot -f --template ", template])
         print("Starting to tail log file for scanning activity...")
         print(log_file)
         for log_line in tail_conpot(log_file):
