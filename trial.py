@@ -17,7 +17,7 @@ def tail_conpot(filename):
 def process_line(line):
     # For Modbus/S7comm scan:
     port_on = re.search(r"\*? server started on:\s+\('([\d.]+)',\s*(\d+)\)", line)
-    port_scan = re.search(r"New (Modbus|s7comm) session from\s+([\d.]+):(\d+)\.\s+\(([a-fA-F0-9\-]+)\)", line)
+    port_scan = re.search(r"New\s+(modbus|s7comm)\s+session\s+from\s+([\d.]+)\s+\(([a-fA-F0-9\-]+)\)", line)
     enip_on = re.search(r"handle server PID \[\s*(\d+)\s*\] starting on \('([\d.]+)',\s*(\d+)\)", line)
     enip_scan = re.search(r"EtherNet/IP CIP Request\s+\(Client\s+\('([\d.]+)',\s*(\d+)\)\):", line)
     if port_on:
@@ -30,8 +30,7 @@ def process_line(line):
     elif port_scan:
         Port = port_scan.group(1)
         IP = port_scan.group(2)
-        attacker_port = port_scan.group(3)
-        session_id = port_scan.group(4)
+        session_id = port_scan.group(3)
         print(f"{Port} scan from {IP}:{attacker_port} with session ID {session_id}")
     elif enip_on:
         PID = enip_on.group(1)
