@@ -2,7 +2,7 @@ import time
 import re
 import os 
 import subprocess
-import datetime
+from datetime import datetime
 
 # Tail the log file to check any update on incoming traffic
 def tail_conpot(filename):
@@ -16,8 +16,8 @@ def tail_conpot(filename):
 
 def process_line(line):
     # For Modbus scan:
-    modbus_on = re.search(r"Modbus server started on:\s+\(\'(\d+)\,\s*(\d+)\)", line)
-    modbus_scan = re.search(r"New Modbus connection from\s+([\d.]+)\:（[\d.]+)\.\s+(([\d.]+)\)", line)
+    modbus_on = re.search(r"Modbus server started on:\s+\('([\d.]+)',\s*(\d+)\)", line)
+    modbus_scan = re.search(r"New Modbus connection from\s+([\d.]+):(\d+)\.\s+\(([a-fA-F0-9\-]+)\)", line)
     if modbus_on:
         IP = modbus_on.group(1)
         port = modbus_on.group(2)
