@@ -114,8 +114,7 @@ def detect_scan_activity():
                 deploy_conpot(scan["ports"])
                 scan["attack_type"] = "Multiple Protocols"
             print(f"Detected scan activity from {key} with {scan['scan_count']} scans on {len(scan['ports'])} ports ({scan['protocols']})")
-            scan_attempts[key].scan_count = 3
-
+            scan_attempts[key]["scan_count"] = 3
 
 
 def turn_on_base_conpot():
@@ -155,7 +154,6 @@ def deploy_conpot(port):
         no_to_deploy = min(no_to_deploy, len(template_names))
         if no_to_deploy == 0:
             print ("No more templates to deploy")
-            s7comm_template_available = False
             return
         else:
             print (f"Deploying {no_to_deploy} extra templates")
