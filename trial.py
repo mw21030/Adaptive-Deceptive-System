@@ -106,16 +106,16 @@ def detect_scan_activity():
         return
     for key in list(scan_attempts.keys()):
         scan = scan_attempts[key]
-        print (f"IP: {key}, Scan count: {scan['scan_count']}, Ports: {scan['ports']}, Protocols: {scan['protocols']}")
         if scan["scan_count"] >= Trial_thresholds:
             if len(scan["ports"]) == 1:
-                print("Single Protocol detected")
                 deploy_conpot(scan["ports"])
-                scan["attack_type"] = "Targeted"
+                scan["attack_type"] = "Single Protocol"
             else:
-                print("Multiple Protocols detected")
                 deploy_conpot(scan["ports"])
                 scan["attack_type"] = "Multiple Protocols"
+            print(f"Detected scan activity from {key} with {scan['scan_count']} scans on {len(scan['ports'])} ports ({scan['protocols']})")
+            scan_attempts[key].scan_count = 3
+
 
 
 def turn_on_base_conpot():
@@ -141,13 +141,7 @@ def deploy_conpot(port):
     print (port)
     dir_path = os.getcwd()
     no_to_deploy = int(3/len(port))
-    if port == "502" and modbus_template_available == False:
-        return
-    elif port == "102" and s7comm_template_available == False:
-        return
-    elif port == "44818" and enip_template_available == False:
-        return
-    
+
     for port in port:
         if port == "502":
             profiles_dir = dir_path + "/conpot_profiles/Deploy_profiles/modbus"
@@ -170,6 +164,7 @@ def deploy_conpot(port):
                 hosting_conpot.append(template)
                 subprocess.Popen(["conpot", "-f", "--template", template_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 print("deployed extra conpot", template)
+        
         
             
 
