@@ -61,7 +61,7 @@ def process_line(line):
     if key == ():
         return
     else:
-        log_scan_activity(key)
+        log_scan_activity(key[0], key[1], key[2])
 
 def log_scan_activity(ip, port, timestamp):
     if port == "502":
