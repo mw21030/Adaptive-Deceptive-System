@@ -98,14 +98,16 @@ def detect_scan_activity():
     if not scan_attempts:
         time.sleep(0.1)
         return
-
     for key in list(scan_attempts.keys()):
         scan = scan_attempts[key]
+        print (f"IP: {key}, Scan count: {scan['scan_count']}, Ports: {scan['ports']}, Protocols: {scan['protocols']}")
         if scan["scan_count"] >= Trial_thresholds:
             if len(scan["port"]) == 1:
+                print("Single Protocol detected")
                 deploy_conpot(scan["port"])
                 scan["attack_type"] = "Targeted"
             else:
+                print("Multiple Protocols detected")
                 deploy_conpot(scan["port"])
                 scan["attack_type"] = "Multiple Protocols"
 
@@ -130,6 +132,7 @@ def turn_off_conpot():
     subprocess.run(["pkill", "conpot"])
 
 def deploy_conpot(port):
+    print (port)
     dir_path = os.getcwd()
     no_to_deploy = int(3/len(port))
     for port in port:
