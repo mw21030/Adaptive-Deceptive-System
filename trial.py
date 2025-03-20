@@ -34,6 +34,7 @@ def process_line(line):
     port_scan = re.search(r"New\s+(modbus|s7comm)\s+session\s+from\s+([\d.]+)\s+\(([a-fA-F0-9\-]+)\)", line)
     enip_on = re.search(r"handle server PID \[\s*(\d+)\s*\] starting on \('([\d.]+)',\s*(\d+)\)", line)
     enip_scan = re.search(r"EtherNet/IP CIP Request\s+\(Client\s+\('([\d.]+)',\s*(\d+)\)\):", line)
+    key = ()
     if port_on:
         IP = port_on.group(1)
         port = port_on.group(2)
@@ -45,7 +46,7 @@ def process_line(line):
         port = port_scan.group(1)
         IP = port_scan.group(2)
         session_id = port_scan.group(3)
-        key = (time.time(), port, IP)
+        key = (IP, port, time.time())
         print(f"{port} scan from {IP} with session ID {session_id}")
     elif enip_on:
         PID = enip_on.group(1)
@@ -55,25 +56,15 @@ def process_line(line):
     elif enip_scan:
         IP = enip_scan.group(1)
         port = enip_scan.group(2)
-        key = (time.time(), port, IP)
+        key = (IP, port, time.time())
         print(f"ENIP scan from {IP}:{port}")
     if key == ():
         if not any(existing_key[2] == IP for existing_key in scan_attempts):
             scan_attempts[key] = key
     else:
-        start_time, target_ips = scan_attempts[key]
-        if time.time() - start_time > TIME_WINDOW:
-            scan_attempts[key] = (time.time(), {IP})
-        else:
-            target_ips.add(IP)
-            scan_attempts[key] = (start_time, target_ips)
-            if len(target_ips) > Trial_thresholds:
-                print(f"Detected targeted scanning from {IP} to {len(target_ips)} distinct IPs on port {port} ({key[0]})")
-                scan_attempts.pop(key)
-                key = ()
+        log_scan_activity(key)
 
-def log_scan_activity(ip, port,ID):
-    timestamp = time.time()
+def log_scan_activity(ip, port, timestamp):
     if port == "502":
         protocol = "Modbus"
     elif port == "102":
