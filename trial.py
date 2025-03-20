@@ -49,11 +49,11 @@ def process_line(line):
         session_id = port_scan.group(4)
         if port_name == "Modbus":
             port = "502"
-            key = (IP, port, time.time(), "modbus")
+            key = (IP, port, time.time())
             print(f"Modbus scan from {IP}:{port} with session ID {session_id}")
         elif port_name == "S7":
             port = "102"
-            key = (IP, port, time.time(), "s7comm")
+            key = (IP, port, time.time())
             print(f"S7comm scan from {IP}:{port} with session ID {session_id}")
     elif enip_on:
         PID = enip_on.group(1)
@@ -63,21 +63,27 @@ def process_line(line):
     elif enip_scan:
         IP = enip_scan.group(1)
         port = 44818
-        key = (IP, port, time.time(), "enip")
+        key = (IP, port, time.time())
         print(f"ENIP scan from {IP}:{port}")
     if key == ():
         return
     else:
         log_scan_activity(key[0], key[1], key[2])
 
-def log_scan_activity(ip, port, timestamp, port_name):
+def log_scan_activity(ip, port, timestamp):
+    if port == "502":
+        potocol = "Modbus"
+    elif port == "102":
+        potocol = "S7Comm"
+    else:
+        potocol = "ENIP"
     if ip not in scan_attempts:
         scan_attempts[ip] = {
             "first_seen": timestamp,
             "last_seen": timestamp,
             "scan_count": 1,
             "ports": {port},  # Store scanned ports as a set
-            "protocols": {port_name},  # Store detected protocols as a set
+            "protocols": {potocol},  # Store detected protocols as a set
             "attack_type": "Unknown"
         }
     else:
