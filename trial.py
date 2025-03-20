@@ -72,18 +72,18 @@ def process_line(line):
 
 def log_scan_activity(ip, port, timestamp):
     if port == "502":
-        potocol = "Modbus"
+        protocol = "Modbus"
     elif port == "102":
-        potocol = "S7Comm"
+        protocol = "S7Comm"
     else:
-        potocol = "ENIP"
+        protocol = "ENIP"
     if ip not in scan_attempts:
         scan_attempts[ip] = {
             "first_seen": timestamp,
             "last_seen": timestamp,
             "scan_count": 1,
             "ports": {port},  # Store scanned ports as a set
-            "protocols": {potocol},  # Store detected protocols as a set
+            "protocols": {protocol},  # Store detected protocols as a set
             "attack_type": "Unknown"
         }
     else:
@@ -93,7 +93,7 @@ def log_scan_activity(ip, port, timestamp):
             scan_attempts[ip]["last_seen"] = timestamp
             scan_attempts[ip]["scan_count"] += 1
             scan_attempts[ip]["ports"].add(port)
-            scan_attempts[ip]["protocols"].add(port_name)
+            scan_attempts[ip]["protocols"].add(protocol)
 
 def detect_scan_activity():
     if not scan_attempts:
