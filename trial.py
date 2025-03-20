@@ -3,7 +3,19 @@ import re
 import os 
 import subprocess
 from datetime import datetime
-import scapy 
+import shutil
+
+attack_counters = {
+    "modbus": {},
+    "s7comm": {},
+    "enip": {}
+}
+TIME_WINDOW = 10
+Trial_thresholds = 5
+scan_attempts = {}
+
+hosting_conpot = []
+
 
 # Tail the log file to check any update on incoming traffic
 def tail_conpot(filename):
@@ -30,10 +42,11 @@ def process_line(line):
         elif port == "102":
             print(f"S7comm on from {IP}:{port}")
     elif port_scan:
-        Port = port_scan.group(1)
+        port = port_scan.group(1)
         IP = port_scan.group(2)
         session_id = port_scan.group(3)
-        print(f"{Port} scan from {IP} with session ID {session_id}")
+        key = (time.time(), port, IP)
+        print(f"{port} scan from {IP} with session ID {session_id}")
     elif enip_on:
         PID = enip_on.group(1)
         IP = enip_on.group(2)
@@ -42,7 +55,60 @@ def process_line(line):
     elif enip_scan:
         IP = enip_scan.group(1)
         port = enip_scan.group(2)
+        key = (time.time(), port, IP)
         print(f"ENIP scan from {IP}:{port}")
+    if key == ():
+        if not any(existing_key[2] == IP for existing_key in scan_attempts):
+            scan_attempts[key] = key
+    else:
+        start_time, target_ips = scan_attempts[key]
+        if time.time() - start_time > TIME_WINDOW:
+            scan_attempts[key] = (time.time(), {IP})
+        else:
+            target_ips.add(IP)
+            scan_attempts[key] = (start_time, target_ips)
+            if len(target_ips) > Trial_thresholds:
+                print(f"Detected targeted scanning from {IP} to {len(target_ips)} distinct IPs on port {port} ({key[0]})")
+                scan_attempts.pop(key)
+                key = ()
+
+def log_scan_activity(ip, port,ID):
+    timestamp = time.time()
+    if port == "502":
+        protocol = "Modbus"
+    elif port == "102":
+        protocol = "S7Comm"
+    else:
+        protocol = "ENIP"
+
+    if ip not in scan_attempts:
+        scan_attempts[ip] = {
+            "first_seen": timestamp,
+            "last_seen": timestamp,
+            "scan_count": 1,
+            "ports": {port},  # Store scanned ports as a set
+            "protocols": {protocol},  # Store detected protocols as a set
+            "attack_type": "Unknown"
+        }
+    else:
+        scan_attempts[ip]["last_seen"] = timestamp
+        scan_attempts[ip]["scan_count"] += 1
+        scan_attempts[ip]["ports"].add(port)
+        scan_attempts[ip]["protocols"].add(protocol)
+
+def detect_scan_activity():
+    for key in scan_attempts:
+        scan = scan_attempts[key]
+        if scan["scan_count"] >= Trial_thresholds:
+            if len(scan["port"]) == 1:
+                deploy_conpot(scan["port"])
+                scan["attack_type"] = "Targeted"
+            else:
+                deploy_conpot(scan["port"])
+                scan["attack_type"] = "Multiple Protocols"
+        elif scan["last_seen"] - scan["first_seen"] > TIME_WINDOW:
+            scan_attempts.pop(key)
+
 
 def turn_on_conpot():
     dir_path = os.getcwd()
@@ -62,6 +128,25 @@ def turn_on_conpot():
 
 def turn_off_conpot():
     subprocess.run(["pkill", "conpot"])
+
+def deploy_conpot(port):
+    dir_path = os.getcwd()
+    no_to_deploy = int(3/len(port))
+    for port in port:
+        if port == "502":
+            profiles_dir = dir_path + "/conpot_profiles/Base_profiles/modbus"
+        elif port == "102":
+            profiles_dir = dir_path + "/conpot_profiles/Base_profiles/s7comm"
+        else:
+            profiles_dir = dir_path + "/conpot_profiles/Base_profiles/enip"
+        template_names = [name for name in os.listdir(profiles_dir)
+                    if os.path.isdir(os.path.join(profiles_dir, name))]
+        template_names = [name for name in template_names if name not in hosting_conpot]
+        for template in template_names[:no_to_deploy]:
+            template_path = profiles_dir + template
+            hosting_conpot.append(template)
+            subprocess.Popen(["conpot", "-f", "--template", template_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
 
 
 if __name__ == "__main__":
