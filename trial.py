@@ -14,6 +14,11 @@ TIME_WINDOW = 10
 Trial_thresholds = 5
 scan_attempts = {}
 
+
+modbus_template_available = True
+s7comm_template_available = True
+enip_template_available = True
+
 hosting_conpot = []
 
 
@@ -136,6 +141,13 @@ def deploy_conpot(port):
     print (port)
     dir_path = os.getcwd()
     no_to_deploy = int(3/len(port))
+    if port == "502" and modbus_template_available == False:
+        return
+    elif port == "102" and s7comm_template_available == False:
+        return
+    elif port == "44818" and enip_template_available == False:
+        return
+    
     for port in port:
         if port == "502":
             profiles_dir = dir_path + "/conpot_profiles/Deploy_profiles/modbus"
@@ -149,6 +161,7 @@ def deploy_conpot(port):
         no_to_deploy = min(no_to_deploy, len(template_names))
         if no_to_deploy == 0:
             print ("No more templates to deploy")
+            s7comm_template_available = False
             return
         else:
             print (f"Deploying {no_to_deploy} extra templates")
