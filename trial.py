@@ -3,6 +3,7 @@ import re
 import os 
 import subprocess
 from datetime import datetime
+import scapy 
 
 # Tail the log file to check any update on incoming traffic
 def tail_conpot(filename):
@@ -11,12 +12,13 @@ def tail_conpot(filename):
         while True:
             line = f.readline()
             if not line:
+                time.sleep(0.1)
                 continue
             yield line
 
 def process_line(line):
     # For Modbus/S7comm scan:
-    port_on = re.search(r"\*? server started on:\s+\('([\d.]+)',\s*(\d+)\)", line)
+    port_on = re.search(r"server started on:\s+\('([\d.]+)',\s*(\d+)\)", line)
     port_scan = re.search(r"New\s+(modbus|s7comm)\s+session\s+from\s+([\d.]+)\s+\(([a-fA-F0-9\-]+)\)", line)
     enip_on = re.search(r"handle server PID \[\s*(\d+)\s*\] starting on \('([\d.]+)',\s*(\d+)\)", line)
     enip_scan = re.search(r"EtherNet/IP CIP Request\s+\(Client\s+\('([\d.]+)',\s*(\d+)\)\):", line)
@@ -44,15 +46,24 @@ def process_line(line):
 
 def turn_on_conpot():
     dir_path = os.getcwd()
-    template1 = dir_path + "/conpot_profiles/Base_profiles/S7-1200"
-    S7_process = subprocess.Popen(["conpot", "-f", "--template", template1], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    template2 = dir_path + "/conpot_profiles/Base_profiles/modbus_trial"
-    Modbus_process2 = subprocess.Popen(["conpot", "-f", "--template", template2], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    template3 = dir_path + "/conpot_profiles/Base_profiles/enip_trial"
-    enip_process = subprocess.Popen(["conpot", "-f", "--template", template3], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    profiles_dir = os.path.join(dir_path, "conpot_profiles/Base_profiles")
+    folder_names = [name for name in os.listdir(profiles_dir)
+                    if os.path.isdir(os.path.join(profiles_dir, name))]
+    for folder in folder_names:
+        template = dir_path + "/conpot_profiles/Base_profiles/" + folder
+        subprocess.Popen(["conpot", "-f", "--template", template], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    
+    # subprocess.Popen(["conpot", "-f", "--template", template1], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    # template2 = dir_path + "/conpot_profiles/Base_profiles/modbus_trial"
+    # subprocess.Popen(["conpot", "-f", "--template", template2], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    # template3 = dir_path + "/conpot_profiles/Base_profiles/enip_trial"
+    # subprocess.Popen(["conpot", "-f", "--template", template3], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
 
 def turn_off_conpot():
     subprocess.run(["pkill", "conpot"])
+
+
 if __name__ == "__main__":
     try:
         dir_path = os.getcwd()
@@ -61,7 +72,7 @@ if __name__ == "__main__":
         print("Starting to tail log file for scanning activity...")
         print(log_file)
         for log_line in tail_conpot(log_file):
-            process_line(log_line)     
+            process_line(log_line) 
     except (KeyboardInterrupt, Exception) as e:
         turn_off_conpot()
         print(f"Exiting Conpot due to: {e}")
