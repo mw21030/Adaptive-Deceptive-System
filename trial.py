@@ -146,14 +146,19 @@ def deploy_conpot(port):
         template_names = [name for name in os.listdir(profiles_dir)
                     if os.path.isdir(os.path.join(profiles_dir, name))]
         template_names = [name for name in template_names if name not in hosting_conpot]
-        if len(template_names) < no_to_deploy:
-            print ("Not enough templates to deploy")
+        no_to_deploy = min(no_to_deploy, len(template_names))
+        if no_to_deploy == 0:
+            print ("No more templates to deploy")
             return
-        else :
+        else:
+            print (f"Deploying {no_to_deploy} extra templates")
             for template in template_names[:no_to_deploy]:
                 template_path = profiles_dir + template
                 hosting_conpot.append(template)
                 subprocess.Popen(["conpot", "-f", "--template", template_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                print("deployed extra conpot", template)
+        
+            
 
 
 
