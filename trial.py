@@ -59,8 +59,7 @@ def process_line(line):
         key = (IP, port, time.time())
         print(f"ENIP scan from {IP}:{port}")
     if key == ():
-        if not any(existing_key[2] == IP for existing_key in scan_attempts):
-            scan_attempts[key] = key
+        return
     else:
         log_scan_activity(key)
 
