@@ -31,7 +31,7 @@ def tail_conpot(filename):
 def process_line(line):
     # For Modbus/S7comm scan:
     port_on = re.search(r"server started on:\s+\('([\d.]+)',\s*(\d+)\)", line)
-    port_scan = re.search(r"New\s+(modbus|s7comm)\s+session\s+from\s+([\d.]+)\s+\(([a-fA-F0-9\-]+)\)", line)
+    port_scan = re.search(r"New\s+(Modbus|S7)\s+connection\s+from\s+([\d\.]+):(\d+)\.\s+\(([a-fA-F0-9\-]+)\)", line)
     enip_on = re.search(r"handle server PID \[\s*(\d+)\s*\] starting on \('([\d.]+)',\s*(\d+)\)", line)
     enip_scan = re.search(r"EtherNet/IP CIP Request\s+\(Client\s+\('([\d.]+)',\s*(\d+)\)\):", line)
     key = ()
@@ -43,11 +43,14 @@ def process_line(line):
         elif port == "102":
             print(f"S7comm on from {IP}:{port}")
     elif port_scan:
-        port = port_scan.group(1)
-        IP = port_scan.group(2)
+        IP = port_scan.group(1)
+        port = port_scan.group(2)
         session_id = port_scan.group(3)
         key = (IP, port, time.time())
-        print(f"{port} scan from {IP} with session ID {session_id}")
+        if port == "502":
+            print(f"Modbus scan from {IP}:{port} with session ID {session_id}")
+        elif port == "102":
+            print(f"S7comm scan from {IP}:{port} with session ID {session_id}")
     elif enip_on:
         PID = enip_on.group(1)
         IP = enip_on.group(2)
@@ -71,6 +74,7 @@ def log_scan_activity(ip, port, timestamp):
     else:
         protocol = "ENIP"
 
+
     if ip not in scan_attempts:
         scan_attempts[ip] = {
             "first_seen": timestamp,
@@ -81,13 +85,20 @@ def log_scan_activity(ip, port, timestamp):
             "attack_type": "Unknown"
         }
     else:
-        scan_attempts[ip]["last_seen"] = timestamp
-        scan_attempts[ip]["scan_count"] += 1
-        scan_attempts[ip]["ports"].add(port)
-        scan_attempts[ip]["protocols"].add(protocol)
+        if timestamp - scan_attempts[ip]["last_seen"] < 1 & protocol in scan_attempts[ip]["protocols"]:
+            scan_attempts[ip]["last_seen"] = timestamp
+        else:
+            scan_attempts[ip]["last_seen"] = timestamp
+            scan_attempts[ip]["scan_count"] += 1
+            scan_attempts[ip]["ports"].add(port)
+            scan_attempts[ip]["protocols"].add(protocol)
 
 def detect_scan_activity():
-    for key in scan_attempts:
+    if not scan_attempts:
+        time.sleep(0.1)
+        return
+
+    for key in list(scan_attempts.keys()):
         scan = scan_attempts[key]
         if scan["scan_count"] >= Trial_thresholds:
             if len(scan["port"]) == 1:
@@ -96,8 +107,6 @@ def detect_scan_activity():
             else:
                 deploy_conpot(scan["port"])
                 scan["attack_type"] = "Multiple Protocols"
-        elif scan["last_seen"] - scan["first_seen"] > TIME_WINDOW:
-            scan_attempts.pop(key)
 
 
 def turn_on_conpot():
@@ -132,10 +141,14 @@ def deploy_conpot(port):
         template_names = [name for name in os.listdir(profiles_dir)
                     if os.path.isdir(os.path.join(profiles_dir, name))]
         template_names = [name for name in template_names if name not in hosting_conpot]
-        for template in template_names[:no_to_deploy]:
-            template_path = profiles_dir + template
-            hosting_conpot.append(template)
-            subprocess.Popen(["conpot", "-f", "--template", template_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if len(template_names) < no_to_deploy:
+            print ("Not enough templates to deploy")
+            return
+        else :
+            for template in template_names[:no_to_deploy]:
+                template_path = profiles_dir + template
+                hosting_conpot.append(template)
+                subprocess.Popen(["conpot", "-f", "--template", template_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
 
@@ -147,7 +160,8 @@ if __name__ == "__main__":
         print("Starting to tail log file for scanning activity...")
         print(log_file)
         for log_line in tail_conpot(log_file):
-            process_line(log_line) 
+            process_line(log_line)
+            detect_scan_activity()
     except (KeyboardInterrupt, Exception) as e:
         turn_off_conpot()
         print(f"Exiting Conpot due to: {e}")
