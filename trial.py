@@ -43,6 +43,7 @@ def process_line(line):
         elif port == "102":
             print(f"S7comm on from {IP}:{port}")
     elif port_scan:
+        print("in")
         port_name = port_scan.group(1)
         IP = port_scan.group(2)
         port = port_scan.group(3)
