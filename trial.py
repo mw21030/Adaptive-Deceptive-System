@@ -85,7 +85,7 @@ def log_scan_activity(ip, port, timestamp):
             "attack_type": "Unknown"
         }
     else:
-        if timestamp - scan_attempts[ip]["last_seen"] < 1 & protocol in scan_attempts[ip]["protocols"]:
+        if timestamp - scan_attempts[ip]["last_seen"] < 1 and protocol in scan_attempts[ip]["protocols"]:
             scan_attempts[ip]["last_seen"] = timestamp
         else:
             scan_attempts[ip]["last_seen"] = timestamp
