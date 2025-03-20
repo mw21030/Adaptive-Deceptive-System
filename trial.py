@@ -138,11 +138,11 @@ def deploy_conpot(port):
     no_to_deploy = int(3/len(port))
     for port in port:
         if port == "502":
-            profiles_dir = dir_path + "/conpot_profiles/Base_profiles/modbus"
+            profiles_dir = dir_path + "/conpot_profiles/Deploy_profiles/modbus"
         elif port == "102":
-            profiles_dir = dir_path + "/conpot_profiles/Base_profiles/s7comm"
+            profiles_dir = dir_path + "/conpot_profiles/Deploy_profiles/s7comm"
         else:
-            profiles_dir = dir_path + "/conpot_profiles/Base_profiles/enip"
+            profiles_dir = dir_path + "/conpot_profiles/Deploy_profiles/enip"
         template_names = [name for name in os.listdir(profiles_dir)
                     if os.path.isdir(os.path.join(profiles_dir, name))]
         template_names = [name for name in template_names if name not in hosting_conpot]
