@@ -31,7 +31,7 @@ def tail_conpot(filename):
 def process_line(line):
     # For Modbus/S7comm scan:
     port_on = re.search(r"server started on:\s+\('([\d.]+)',\s*(\d+)\)", line)
-    port_scan = re.search(r"New\s+(Modbus|S7)\s+connection\s+from\s+([\d\.]+):(\d+)\.\s+\(([a-fA-F0-9\-]+)\)", line)
+    port_scan = re.search(r"New\s+([\d\.]+)\s+connection\s+from\s+([\d\.]+):(\d+)\.\s+\(([a-fA-F0-9\-]+)\)", line)
     enip_on = re.search(r"handle server PID \[\s*(\d+)\s*\] starting on \('([\d.]+)',\s*(\d+)\)", line)
     enip_scan = re.search(r"EtherNet/IP CIP Request\s+\(Client\s+\('([\d.]+)',\s*(\d+)\)\):", line)
     key = ()
@@ -43,13 +43,14 @@ def process_line(line):
         elif port == "102":
             print(f"S7comm on from {IP}:{port}")
     elif port_scan:
-        IP = port_scan.group(1)
-        port = port_scan.group(2)
-        session_id = port_scan.group(3)
+        port_name = port_scan.group(1)
+        IP = port_scan.group(2)
+        port = port_scan.group(3)
+        session_id = port_scan.group(4)
         key = (IP, port, time.time())
-        if port == "502":
+        if port_name == "Modbus":
             print(f"Modbus scan from {IP}:{port} with session ID {session_id}")
-        elif port == "102":
+        elif port_name == "S7":
             print(f"S7comm scan from {IP}:{port} with session ID {session_id}")
     elif enip_on:
         PID = enip_on.group(1)
