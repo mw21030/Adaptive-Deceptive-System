@@ -46,12 +46,14 @@ def process_line(line):
         print("in")
         port_name = port_scan.group(1)
         IP = port_scan.group(2)
-        port = port_scan.group(3)
         session_id = port_scan.group(4)
-        key = (IP, port, time.time())
         if port_name == "Modbus":
+            port = "502"
+            key = (IP, port, time.time(), "modbus")
             print(f"Modbus scan from {IP}:{port} with session ID {session_id}")
         elif port_name == "S7":
+            port = "102"
+            key = (IP, port, time.time(), "s7comm")
             print(f"S7comm scan from {IP}:{port} with session ID {session_id}")
     elif enip_on:
         PID = enip_on.group(1)
@@ -60,30 +62,22 @@ def process_line(line):
         print(f"ENIP on from {IP}:{port} with PID {PID}")
     elif enip_scan:
         IP = enip_scan.group(1)
-        port = enip_scan.group(2)
-        key = (IP, port, time.time())
+        port = 44818
+        key = (IP, port, time.time(), "enip")
         print(f"ENIP scan from {IP}:{port}")
     if key == ():
         return
     else:
         log_scan_activity(key[0], key[1], key[2])
 
-def log_scan_activity(ip, port, timestamp):
-    if port == "502":
-        protocol = "Modbus"
-    elif port == "102":
-        protocol = "S7Comm"
-    else:
-        protocol = "ENIP"
-
-
+def log_scan_activity(ip, port, timestamp, port_name):
     if ip not in scan_attempts:
         scan_attempts[ip] = {
             "first_seen": timestamp,
             "last_seen": timestamp,
             "scan_count": 1,
             "ports": {port},  # Store scanned ports as a set
-            "protocols": {protocol},  # Store detected protocols as a set
+            "protocols": {port_name},  # Store detected protocols as a set
             "attack_type": "Unknown"
         }
     else:
@@ -93,7 +87,7 @@ def log_scan_activity(ip, port, timestamp):
             scan_attempts[ip]["last_seen"] = timestamp
             scan_attempts[ip]["scan_count"] += 1
             scan_attempts[ip]["ports"].add(port)
-            scan_attempts[ip]["protocols"].add(protocol)
+            scan_attempts[ip]["protocols"].add(port_name)
 
 def detect_scan_activity():
     if not scan_attempts:
@@ -103,17 +97,17 @@ def detect_scan_activity():
         scan = scan_attempts[key]
         print (f"IP: {key}, Scan count: {scan['scan_count']}, Ports: {scan['ports']}, Protocols: {scan['protocols']}")
         if scan["scan_count"] >= Trial_thresholds:
-            if len(scan["port"]) == 1:
+            if len(scan["ports"]) == 1:
                 print("Single Protocol detected")
-                deploy_conpot(scan["port"])
+                deploy_conpot(scan["ports"])
                 scan["attack_type"] = "Targeted"
             else:
                 print("Multiple Protocols detected")
-                deploy_conpot(scan["port"])
+                deploy_conpot(scan["ports"])
                 scan["attack_type"] = "Multiple Protocols"
 
 
-def turn_on_conpot():
+def turn_on_base_conpot():
     dir_path = os.getcwd()
     profiles_dir = os.path.join(dir_path, "conpot_profiles/Base_profiles")
     folder_names = [name for name in os.listdir(profiles_dir)
@@ -161,7 +155,7 @@ if __name__ == "__main__":
     try:
         dir_path = os.getcwd()
         log_file = dir_path + "/conpot.log"  # Update this with the actual path to your conpot.log file
-        turn_on_conpot()
+        turn_on_base_conpot()
         print("Starting to tail log file for scanning activity...")
         print(log_file)
         for log_line in tail_conpot(log_file):
