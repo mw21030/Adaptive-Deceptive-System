@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   orchestrator:
-    build: ./orchestrator
+    build: ./orchestrator/
     container_name: orchestrator_container
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
