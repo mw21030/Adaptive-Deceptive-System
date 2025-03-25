@@ -1,0 +1,31 @@
+# Use a lightweight Python image as the base (using Python 3.10)
+FROM python:3.10-slim
+
+# Install OS-level dependencies required by Conpot
+RUN apt-get update && apt-get install -y \
+    libssl-dev \
+    libffi-dev \
+    build-essential && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Conpot via pip (this installs the standard version)
+RUN pip install \
+    conpot==0.6.0 \
+    pysnmp==4.4.12 \
+    pyasn1==0.4.8 \
+    scapy==2.4.5
+
+# Replace the installed Conpot files with your modified version
+# Ensure your local modifications are built for Python 3.10 and the path matches
+COPY ./.local/lib/python3.10/site-packages/conpot/ /usr/local/lib/python3.10/site-packages/conpot/
+
+# Set any necessary environment variables (optional)
+ENV CONPOT_HOME=/opt/conpot
+
+# Expose the port that Conpot uses (adjust as necessary)
+EXPOSE 8080
+
+# Start Conpot.
+# Assuming that the conpot command is now in PATH (usually in /usr/local/bin/),
+# you can run it directly. Adjust command-line options as needed.
+CMD ["conpot", "-f", "--template", "/usr/local/lib/python3.10/site-packages/conpot/templates/default"]
