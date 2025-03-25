@@ -1,165 +1,227 @@
-import os
-import argparse
-import ipaddress
-
-#!/usr/bin/env python3
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
 
-def generate_conpot_template(ip_address, vendor, port):
-    # Create the root element
-    root = ET.Element("core")
-    
-    # Add template information
-    template = ET.SubElement(root, "template")
-    template.set("name", f"{vendor}_template")
-    
-    # Add protocol details based on common industrial protocols
-    protocols = ET.SubElement(root, "protocols")
-    
-    protocol_mapping = {
-        "modbus": 502,
-        "s7comm": 102,
-        "http": 80,
-        "snmp": 161,
-        "bacnet": 47808,
-        "ipmi": 623,
-        "enip": 44818
-    }
-    
-    # Vendor-specific protocols
-    vendor_protocols = {
-        "siemens": ["s7comm", "http", "snmp"],
-        "schneider": ["modbus", "http", "snmp"],
-        "allen-bradley": ["enip", "http"],
-        "honeywell": ["bacnet", "http"],
-        "ge": ["modbus", "http", "snmp"],
-        "omron": ["fins", "http"],
-        "mitsubishi": ["melsec-q", "http"]
-    }
-    
-    # Determine protocol based on port and vendor
-    protocol_name = None
-    for name, default_port in protocol_mapping.items():
-        if int(port) == default_port:
-            protocol_name = name
-            break
-    
-    if not protocol_name and vendor.lower() in vendor_protocols:
-        protocol_name = vendor_protocols[vendor.lower()][0]
-    
-    if not protocol_name:
-        protocol_name = "generic"
-    
-    protocol = ET.SubElement(protocols, protocol_name)
-    protocol.set("enabled", "true")
-    protocol.set("host", ip_address)
-    protocol.set("port", str(port))
-    
-    # Add vendor-specific device information
-    device_info = ET.SubElement(root, "device_info")
-    vendor_elem = ET.SubElement(device_info, "vendor")
-    vendor_elem.text = vendor
-    
-    vendor_info = {
-        "siemens": {
-            "product": "SIMATIC S7-300",
-            "version": "v3.2.14",
-            "serial": "S7-300-123456"
+VENDOR_DETAILS = {
+    "siemens": {
+        "enip": {
+            "VendorId": "1",
+            "ProductName": "1766-L32BXBA C/21.07",
+            "DeviceType": "14",
+            "SerialNumber": "3491651754",
+            "ProductRevision": "1557",
+            "ProductCode": "21"
         },
-        "schneider": {
-            "product": "Modicon M340",
-            "version": "v2.4.0",
-            "serial": "M340-789012"
+        "s7comm": {
+            "system_status": {
+                "ssl": {
+                    "id": "W#16#xy1C",
+                    "name": "Component Identification",
+                    "system_name": {"id": "W#16#0001", "value": "SystemName"},
+                    "module_name": {"id": "W#16#0002", "value": "sysName"},
+                    "plant_ident": {"id": "W#16#0003", "value": "FacilityName"},
+                    "copyright": {"id": "W#16#0004", "value": "Copyright"},
+                    "serial": {"id": "W#16#0005", "value": "s7_id"},
+                    "module_type_name": {"id": "z#16#0007", "value": "s7_module_type"},
+                    "oem_id": {"id": "W#16#000A", "value": "empty"},
+                    "location": {"id": "W#16#000B", "value": "empty"}
+                },
+                "ssl2": {
+                    "id": "W#16#xy11",
+                    "name": "Module Identification",
+                    "module_identification": {"id": "W#16#0001", "value": "module"},
+                    "hardware_identification": {"id": "W#16#0006", "value": "hardware"},
+                    "firmware_identification": {"id": "W#16#0006", "value": "firmware"}
+                }
+            }
         },
-        "allen-bradley": {
-            "product": "ControlLogix 5570",
-            "version": "v20.11",
-            "serial": "CL5570-345678"
-        },
-        "honeywell": {
-            "product": "ControlEdge PLC",
-            "version": "v1.2.3",
-            "serial": "CE-901234"
-        },
-        "ge": {
-            "product": "Mark VIe",
-            "version": "v5.0.1",
-            "serial": "MV6-567890"
+        "modbus": {
+            "device_info": {
+                "VendorName": "Siemens",
+                "ProductCode": "SIMATIC",
+                "MajorMinorRevision": "S7-200"
+            },
+            "mode": "serial",
+            "delay": "100",
+            "slaves": [
+                {
+                    "id": "0",
+                    "blocks": [
+                        {
+                            "name": "memoryModbusSlave0BlockA",
+                            "type": "COILS",
+                            "starting_address": "1",
+                            "size": "128",
+                            "content": "memoryModbusSlave0BlockA"
+                        },
+                        {
+                            "name": "memoryModbusSlave0BlockB",
+                            "type": "DISCRETE_INPUTS",
+                            "starting_address": "10001",
+                            "size": "32",
+                            "content": "memoryModbusSlave0BlockB"
+                        }
+                    ]
+                },
+                {
+                    "id": "1",
+                    "blocks": [
+                        {
+                            "name": "memoryModbusSlave255BlockA",
+                            "type": "COILS",
+                            "starting_address": "1",
+                            "size": "128",
+                            "content": "memoryModbusSlave255BlockA"
+                        },
+                        {
+                            "name": "memoryModbusSlave255BlockB",
+                            "type": "DISCRETE_INPUTS",
+                            "starting_address": "10001",
+                            "size": "32",
+                            "content": "memoryModbusSlave255BlockB"
+                        }
+                    ]
+                },
+                {
+                    "id": "255",
+                    "blocks": [
+                        {
+                            "name": "memoryModbusSlave1BlockA",
+                            "type": "COILS",
+                            "starting_address": "1",
+                            "size": "128",
+                            "content": "memoryModbusSlave1BlockA"
+                        },
+                        {
+                            "name": "memoryModbusSlave1BlockB",
+                            "type": "DISCRETE_INPUTS",
+                            "starting_address": "10001",
+                            "size": "32",
+                            "content": "memoryModbusSlave1BlockB"
+                        }
+                    ]
+                }
+            ]
         }
-    }
-    
-    if vendor.lower() in vendor_info:
-        info = vendor_info[vendor.lower()]
-        product_elem = ET.SubElement(device_info, "product")
-        product_elem.text = info["product"]
-        version_elem = ET.SubElement(device_info, "version")
-        version_elem.text = info["version"]
-        serial_elem = ET.SubElement(device_info, "serial")
-        serial_elem.text = info["serial"]
-    
-    # Convert to pretty XML
-    rough_string = ET.tostring(root, 'utf-8')
+    },
+    # You can add additional vendor mappings here
+}
+
+def pretty_xml(element):
+    """Returns a pretty-printed XML string for the Element."""
+    rough_string = ET.tostring(element, 'utf-8')
     reparsed = minidom.parseString(rough_string)
-    pretty_xml = reparsed.toprettyxml(indent="  ")
-    
-    return pretty_xml
+    return reparsed.toprettyxml(indent="  ")
 
-def generate_dockerfile(template_name, port):
-    vm_path = "/usr/local/lib/python3.10/site-packages/conpot/templates/" + template_name
-    template_path = os.path.basename(template_name)
-    dockerfile = f"""FROM my_custom_conpot_image:latest
+def generate_enip_xml(ip, vendor, port):
+    # Create root element for ENIP.
+    root = ET.Element("enip", attrib={"enabled": "True", "host": ip, "port": str(port)})
+    
+    # Device information
+    device_info = ET.SubElement(root, "device_info")
+    details = VENDOR_DETAILS.get(vendor.lower(), {}).get("enip", {})
+    for key, value in details.items():
+        elem = ET.SubElement(device_info, key)
+        elem.text = value
+    
+    # Additional ENIP settings (using sample static values; adjust as needed)
+    mode = ET.SubElement(root, "mode")
+    mode.text = "udp"
+    
+    latency = ET.SubElement(root, "latency")
+    latency.text = "0.1"
+    
+    timeout = ET.SubElement(root, "timeout")
+    timeout.text = "20"
+    
+    # Example tags (customize as needed)
+    tags = ET.SubElement(root, "tags")
+    tag_data = [
+        {"name": "SensorInput", "type": "BOOL", "size": "1", "value": "0", "addr": "22/1/1"},
+        {"name": "SensorOutput", "type": "INT", "size": "1", "value": "67", "addr": "22/1/2"},
+        {"name": "MotorSpeedControl", "type": "REAL", "size": "4", "value": "1500", "addr": "22/1/3"}
+    ]
+    for td in tag_data:
+        tag = ET.SubElement(tags, "tag", attrib={"name": td["name"]})
+        for k in ["type", "size", "value", "addr"]:
+            elem = ET.SubElement(tag, k)
+            elem.text = td[k]
+    
+    return pretty_xml(root)
 
-RUN mkdir -p {vm_path}
+def generate_s7comm_xml(ip, vendor, port):
+    # Create root element for S7comm.
+    root = ET.Element("s7comm", attrib={"enabled": "True", "host": ip, "port": str(port)})
     
-# Copy our custom template
-COPY {template_path} {vm_path}
+    system_status_lists = ET.SubElement(root, "system_status_lists")
+    
+    vendor_data = VENDOR_DETAILS.get(vendor.lower(), {}).get("s7comm", {}).get("system_status", {})
+    # Create first ssl element
+    ssl = ET.SubElement(system_status_lists, "ssl", attrib={
+        "id": vendor_data.get("ssl", {}).get("id", "default_id"),
+        "name": vendor_data.get("ssl", {}).get("name", "Component Identification")
+    })
+    for tag in ["system_name", "module_name", "plant_ident", "copyright", "serial", "module_type_name", "oem_id", "location"]:
+        tag_data = vendor_data.get("ssl", {}).get(tag, {})
+        elem = ET.SubElement(ssl, tag, attrib={"id": tag_data.get("id", "")})
+        elem.text = tag_data.get("value", "")
+    
+    # Create second ssl element
+    ssl2 = ET.SubElement(system_status_lists, "ssl", attrib={
+        "id": vendor_data.get("ssl2", {}).get("id", "default_id2"),
+        "name": vendor_data.get("ssl2", {}).get("name", "Module Identification")
+    })
+    for tag in ["module_identification", "hardware_identification", "firmware_identification"]:
+        tag_data = vendor_data.get("ssl2", {}).get(tag, {})
+        elem = ET.SubElement(ssl2, tag, attrib={"id": tag_data.get("id", "")})
+        elem.text = tag_data.get("value", "")
+    
+    return pretty_xml(root)
 
-ENV CONPOT_HOME=/opt/conpot
+def generate_modbus_xml(ip, vendor, port):
+    # Create root element for Modbus.
+    root = ET.Element("modbus", attrib={"enabled": "True", "host": ip, "port": str(port)})
+    
+    # Device Information
+    device_info = ET.SubElement(root, "device_info")
+    details = VENDOR_DETAILS.get(vendor.lower(), {}).get("modbus", {}).get("device_info", {})
+    for key, value in details.items():
+        elem = ET.SubElement(device_info, key)
+        elem.text = value
+    
+    # Other modbus settings
+    mode = ET.SubElement(root, "mode")
+    mode.text = VENDOR_DETAILS.get(vendor.lower(), {}).get("modbus", {}).get("mode", "serial")
+    
+    delay = ET.SubElement(root, "delay")
+    delay.text = VENDOR_DETAILS.get(vendor.lower(), {}).get("modbus", {}).get("delay", "100")
+    
+    # Slaves and Blocks
+    slaves_data = VENDOR_DETAILS.get(vendor.lower(), {}).get("modbus", {}).get("slaves", [])
+    slaves = ET.SubElement(root, "slaves")
+    for slave in slaves_data:
+        slave_elem = ET.SubElement(slaves, "slave", attrib={"id": slave.get("id", "")})
+        blocks = ET.SubElement(slave_elem, "blocks")
+        for block in slave.get("blocks", []):
+            block_elem = ET.SubElement(blocks, "block", attrib={"name": block.get("name", "")})
+            for field in ["type", "starting_address", "size", "content"]:
+                sub_elem = ET.SubElement(block_elem, field)
+                sub_elem.text = block.get(field, "")
+    
+    return pretty_xml(root)
 
-# Expose the port
-EXPOSE {port}
-
-# Run Conpot with our template
-CMD ["conpot", "-f", "--template", {vm_path}]
-"""
-    
-    return dockerfile
-    
-
-def main():
-    parser = argparse.ArgumentParser(description='Generate Conpot template and Dockerfile')
-    parser.add_argument('--ip', required=True, help='IP address for the honeypot')
-    parser.add_argument('--vendor', required=True, help='Vendor name (e.g., siemens, schneider)')
-    parser.add_argument('--port', required=True, type=int, help='Port number for the service')
-    
-    args = parser.parse_args()
-    
-    # Validate IP address
-    try:
-        ipaddress.ip_address(args.ip)
-    except ValueError:
-        print(f"Error: '{args.ip}' is not a valid IP address")
-        return
-    
-    # Generate template
-    template_name = f"{args.vendor}_{args.port}_template.xml"
-    template_content = generate_conpot_template(args.ip, args.vendor, args.port)
-    
-    # Write template to file
-    with open(template_name, 'w') as f:
-        f.write(template_content)
-    
-    print(f"Generated Conpot template: {template_name}")
-    
-    # Generate Dockerfile
-    dockerfile_content = generate_dockerfile(template_name, args.port)
-    
-    # Write Dockerfile to file
-    with open("Dockerfile", 'w') as f:
-        f.write(dockerfile_content)
-    
-    print("Generated Dockerfile")
-
+# Example usage:
 if __name__ == "__main__":
-    main()
+    # Generate each XML based on given ip, vendor, and port
+    enip_xml = generate_enip_xml("192.168.220.13", "siemens", 44818)
+    s7comm_xml = generate_s7comm_xml("192.168.220.22", "siemens", 102)
+    modbus_xml = generate_modbus_xml("192.168.220.7", "siemens", 502)
+    
+    # Write or print the files as needed.
+    with open("enip.xml", "w") as f:
+        f.write(enip_xml)
+    with open("s7comm.xml", "w") as f:
+        f.write(s7comm_xml)
+    with open("modbus.xml", "w") as f:
+        f.write(modbus_xml)
+    
+    print("Generated XML files for ENIP, S7comm, and Modbus")

@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   conpot_s7_1200:
     build:
