@@ -1,0 +1,14 @@
+FROM my_custom_conpot_image:latest
+
+RUN mkdir -p /usr/local/lib/python3.10/site-packages/conpot/templates/s7-300_base
+    
+# Copy our custom template
+COPY . /usr/local/lib/python3.10/site-packages/conpot/templates/s7-300_base
+
+ENV CONPOT_HOME=/opt/conpot
+
+# Expose the port
+EXPOSE 102
+
+# Run Conpot with our template
+CMD ["conpot", "-f", "--template", "/usr/local/lib/python3.10/site-packages/conpot/templates/s7-300_base"]

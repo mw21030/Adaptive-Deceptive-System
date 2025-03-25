@@ -1,8 +1,46 @@
 version: "3.8"
+
 services:
-  orchestrator:
-    build: ./orchestrator
-    container_name: orchestrator_container
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    network_mode: "host"
+  conpot_s7_1200:
+    build:
+      context: ./Honepot/Base_Honeynet/S7-1200
+      dockerfile: dockerfile
+    container_name: conpot_s7_1200
+    ports:
+      - "102:102"
+    networks:
+      my_honeynet:
+        ipv4_address: 192.168.220.35
+
+  conpot_s7_300:
+    build:
+      context: ./Honepot/Base_Honeynet/S7-300
+      dockerfile: dockerfile
+    container_name: conpot_s7_300
+    ports:
+      - "102:102"
+    networks:
+      my_honeynet:
+        ipv4_address: 192.168.220.22
+
+  conpot_modbus:
+    build:
+      context: ./Honepot/Base_Honeynet/modbus_trial
+      dockerfile: dockerfile
+    container_name: conpot_modbus
+    ports:
+      - "502:502"
+    networks:
+      my_honeynet:
+        ipv4_address: 192.168.220.7
+
+  conpot_enip:
+    build:
+      context: ./Honepot/Base_Honeynet/enip_trial
+      dockerfile: dockerfile
+    container_name: conpot_enip
+    ports:
+      - "44818:44818"
+    networks:
+      my_honeynet:
+        ipv4_address: 192.168.220.13
