@@ -11,4 +11,4 @@ ENV CONPOT_HOME=/opt/conpot
 EXPOSE 44818
 
 # Run Conpot with our template
-CMD ["conpot", "-f", "--template", /usr/local/lib/python3.10/site-packages/conpot/templates/enip_base]
+CMD ["conpot", "-f", "--template", "/usr/local/lib/python3.10/site-packages/conpot/templates/enip_base"]
