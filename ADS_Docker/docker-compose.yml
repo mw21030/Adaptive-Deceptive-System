@@ -45,7 +45,6 @@ services:
       my_honeynet:
         ipv4_address: 192.168.220.13
   
-  networks:
-  my_honeynet:
-    name : my_honeynet
+networks:
+   my_honeynet:
     external: true
