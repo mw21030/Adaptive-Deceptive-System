@@ -123,7 +123,9 @@ EXPOSE {port}
 # Run Conpot with our template
 CMD ["conpot", "-f", "--template", {vm_path}]
 """
+    
     return dockerfile
+    
 
 def main():
     parser = argparse.ArgumentParser(description='Generate Conpot template and Dockerfile')

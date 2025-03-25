@@ -1,12 +1,10 @@
 import docker
 import time
 
-def list_containers():
+def deploy_base_conpot(ports):
     client = docker.from_env()
-    containers = client.containers.list()
-    print("Currently running containers:")
-    for container in containers:
-        print(f"- {container.name}")
+    client.containers.run("conpot", detach=True, ports={f"{ports[0]}/tcp": ports[0]})
+
 
 def main():
     print("Orchestrator started. Monitoring Docker containers...")
