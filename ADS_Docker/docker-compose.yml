@@ -47,4 +47,5 @@ services:
   
   networks:
   my_honeynet:
+    name : my_honeynet
     external: true
