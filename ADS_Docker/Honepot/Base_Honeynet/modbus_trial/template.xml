@@ -3,8 +3,8 @@
         <entity name="unit">371</entity>
         <entity name="vendor">IPMI</entity>
         <entity name="description">Creates a simple IPMI device</entity>
-        <entity name="protocols">IPMI</entity>
-        <entity name="creator">Modbus</entity>
+        <entity name="protocols">Modbus</entity>
+        <entity name="creator">mw</entity>
     </template>
     <databus>
         <key_value_mappings>
