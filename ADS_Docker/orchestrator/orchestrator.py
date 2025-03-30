@@ -3,7 +3,7 @@ import time
 import socket
 import ssl
 
-HOST = '192.168.220.129'         # Listen on all network interfaces
+HOST = '192.168.220.128'         # Listen on all network interfaces
 PORT = 8443             # Must match REMOTE_PORT in your sender script
 SERVER_CERT = '/home/mw/server.pem'
 SERVER_KEY = '/home/mw/server.key'

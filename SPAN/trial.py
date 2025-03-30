@@ -11,9 +11,11 @@ import shutil
 INTERFACE = "ens33"
 REMOTE_IP = "192.168.220.128"
 REMOTE_PORT = 8443
-CERT_PATH = "/home/mw21030/cert.pem"  
-KEY_PATH = "/home/mw21030/key.pem"
 LOG_DIR = "/tmp/snortlog"
+
+CLIENT_CERT = '/home/mw21030/client.pem'
+CLIENT_KEY = '/home/mw21030/client.key'
+CA_CERT = '/home/mw21030/ca.pem'
 
 SHUTDOWN = False
 
@@ -29,8 +31,8 @@ def tail_alerts():
 
     with open(alert_path, 'r') as f:
         f.seek(0, os.SEEK_END)
-        context = ssl.create_default_context()
-        context.load_cert_chain(certfile=CERT_PATH, keyfile=KEY_PATH)
+        context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH, cafile=CA_CERT)
+        context.load_cert_chain(certfile=CLIENT_CERT, keyfile=CLIENT_KEY)
         while True:
             line = f.readline()
             if line:
