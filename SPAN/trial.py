@@ -33,6 +33,8 @@ def tail_alerts():
         f.seek(0, os.SEEK_END)
         context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH, cafile=CA_CERT)
         context.load_cert_chain(certfile=CLIENT_CERT, keyfile=CLIENT_KEY)
+        context.check_hostname = False
+
         while True:
             line = f.readline()
             if line:
@@ -42,7 +44,9 @@ def tail_alerts():
                         with context.wrap_socket(raw_sock, server_hostname=REMOTE_IP) as s:
                             s.sendall(line.encode())
                 except Exception as e:
-                    print(f"[-] Failed to send alert: {e}")
+                    print(f"System is down")
+                    time.sleep(1)
+
             else:
                 time.sleep(0.5)
 
