@@ -5,11 +5,14 @@ import ssl
 
 HOST = '192.168.220.129'         # Listen on all network interfaces
 PORT = 8443             # Must match REMOTE_PORT in your sender script
-CERTFILE = '/home/mw/cert.pem'
-KEYFILE = '/home/mw/key.pem'
+SERVER_CERT = '/home/mw/server.pem'
+SERVER_KEY = '/home/mw/server.key'
+CA_CERT = '/home/mw/ca.pem'
 
 context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-context.load_cert_chain(certfile=CERTFILE, keyfile=KEYFILE)
+context.load_cert_chain(certfile=SERVER_CERT, keyfile=SERVER_KEY)
+context.load_verify_locations(cafile=CA_CERT)
+context.verify_mode = ssl.CERT_REQUIRED
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0) as sock:
     sock.bind((HOST, PORT))
