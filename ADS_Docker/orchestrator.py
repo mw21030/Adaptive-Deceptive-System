@@ -22,6 +22,7 @@ def start_base_conpot():
 
 def cleanup():
     subprocess.run(f"sudo docker-compose down ", shell=True, stdin=subprocess.DEVNULL)
+    subprocess.run(f"docker rm -f $(docker ps -aq)", shell=True, stdin=subprocess.DEVNULL)
 
 def start_server():
     context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
@@ -74,7 +75,7 @@ def honeypot_deploy(template_name, port, IP):
     dir_path = os.getcwd()
     profiles_dir = os.path.join(dir_path, "Honeypot/Templates")
     template_path = os.path.join(profiles_dir, template_name)
-    subprocess.run(f"sudo docker build -t {template_name} {template_path}",shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(f"docker build -t {template_name} {template_path}",shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}",shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
     deploy_conpot[template_name] += IP, port
@@ -118,11 +119,12 @@ def process_alert(alert):
     else: group = "Unknown"
 
 def main():
-    # print ("Starting conpot instances...")
-    # start_base_conpot()
-    # print ("Starting orchestrator...")
-    # start_server()
-    honeypot_deploy("s7-1200", 102, "192.168.220.35")
+    honeypot_deploy("s7-1200", 102, "192.168.220.36")
+    print ("Starting conpot instances...")
+    start_base_conpot()
+    print ("Starting orchestrator...")
+    start_server()
+
     
 
 if __name__ == "__main__":
