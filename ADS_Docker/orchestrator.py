@@ -72,7 +72,7 @@ def turn_on_base_conpot():
 
 def honeypot_deploy(template_name, port, IP):
     dir_path = os.getcwd()
-    profiles_dir = os.path.join(dir_path, "Honeypot/Templates")
+    profiles_dir = os.path.join("./", "Honeypot/Templates")
     template_path = os.path.join(profiles_dir, template_name)
     result = subprocess.Popen(f"docker build -t {template_name} {template_path}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if result.wait() != 0:
