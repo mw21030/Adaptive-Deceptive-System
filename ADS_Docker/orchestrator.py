@@ -75,12 +75,10 @@ def honeypot_deploy(template_name, port, IP):
     profiles_dir = os.path.join(dir_path, "Honeypot/Templates")
     template_path = os.path.join(profiles_dir, template_name)
     result = subprocess.run(f"sudo docker build -t {template_name} {template_path}",shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    if result.wait() != 0:
-        print(f"Error building Docker image for {template_name}")
-    else:
-        subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        print(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
-        deploy_conpot[template_name] += IP, port
+    subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    print(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
+    deploy_conpot[template_name] += IP, port
+    print (deploy_conpot)
 
 def process_alert(alert):
 
