@@ -74,7 +74,7 @@ def honeypot_deploy(template_name, port, IP):
     dir_path = os.getcwd()
     profiles_dir = os.path.join(dir_path, "Honeypot/Templates")
     template_path = os.path.join(profiles_dir, template_name)
-    result = subprocess.run(f"sudo docker build -t {template_name} {template_path}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    result = subprocess.run(f"sudo docker build -t {template_name} {template_path}",shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if result.wait() != 0:
         print(f"Error building Docker image for {template_name}")
     else:
