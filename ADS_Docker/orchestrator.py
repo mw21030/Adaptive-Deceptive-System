@@ -16,13 +16,7 @@ CA_CERT = '/home/mw/ca.pem'
 
 def start_base_conpot():
     try:
-        result = subprocess.run(
-            ["docker-compose", "up", "-d"],
-            cwd=".\docker-compose.yml",
-            check=True,
-            capture_output=True,
-            text=True
-        )
+        subprocess.run(['sudo','docker-compose', 'up', '-d'], check=True, stderr=subprocess.PIPE)
     except subprocess.CalledProcessError as e:
         print(f"Error starting base conpot: {e.stderr}")
 
