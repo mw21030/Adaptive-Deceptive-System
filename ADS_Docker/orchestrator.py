@@ -72,15 +72,15 @@ def turn_on_base_conpot():
 
 def honeypot_deploy(template_name, port, IP):
     dir_path = os.getcwd()
-    profiles_dir = os.path.join("./", "Honeypot/Templates")
+    profiles_dir = os.path.join("dir_path", "Honeypot/Templates")
     template_path = os.path.join(profiles_dir, template_name)
-    subprocess.Popen(f"docker build -t {template_name} {template_path}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    # if result.wait() != 0:
-    #     print(f"Error building Docker image for {template_name}")
-    # else:
-    subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    print(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
-    deploy_conpot[template_name] += IP, port
+    result = subprocess.run(f"docker build -t {template_name} {template_path}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if result.wait() != 0:
+        print(f"Error building Docker image for {template_name}")
+    else:
+        subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        print(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
+        deploy_conpot[template_name] += IP, port
 
 def process_alert(alert):
 
