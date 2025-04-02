@@ -130,7 +130,7 @@ def generate_enip_xml(ip, vendor, port, profile_detail):
     device_info = ET.SubElement(root, "device_info")
     # Use profile_detail for device information
     vendor_name = profile_detail
-    \
+    
     ET.SubElement(device_info, "VendorId").text = profile_detail.get('unit', 'Generic PLC')
     ET.SubElement(device_info, "ProductName").text = profile_detail.get('unit', 'Generic PLC')
     ET.SubElement(device_info, "DeviceType").text = profile_detail.get('product_code', str(random.randint(1000, 9999)))
@@ -224,8 +224,8 @@ def generate_modbus_xml(ip, vendor, port):
     
     return pretty_xml(root)
 
-def generate_conpot(vender, port, ip):
-    template_name = f"{vender}_{port}"
+def generate_conpot(strategy, port, ip):
+    template_name = f"{vender}_{ip}"
     template_xml = template_generator(port, template_name)
     dockerfile_content = dockerfile_generator(port, template_name)
 
@@ -261,6 +261,4 @@ def generate_conpot(vender, port, ip):
     return template_name
 
 if __name__ == "__main__":
-    s7_device = get_random_vendor_data(102)
-    print(s7_device)
-    print(s7_device['Vendor'])
+    generate_conpot("Allen-Bradley CompactLogix", 502, f"192.168.0.0")
