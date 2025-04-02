@@ -1,7 +1,7 @@
 services:
   conpot_s7_1200:
     build:
-      context: ./Honepot/Base_Honeynet/S7-1200
+      context: ./Honeypot/Base_Honeynet/S7-1200
       dockerfile: dockerfile
     container_name: conpot_s7_1200
     ports:
@@ -12,7 +12,7 @@ services:
 
   conpot_s7_300:
     build:
-      context: ./Honepot/Base_Honeynet/S7-300
+      context: ./Honeypot/Base_Honeynet/S7-300
       dockerfile: dockerfile
     container_name: conpot_s7_300
     ports:
@@ -23,7 +23,7 @@ services:
 
   conpot_modbus:
     build:
-      context: ./Honepot/Base_Honeynet/modbus_trial
+      context: ./Honeypot/Base_Honeynet/modbus_trial
       dockerfile: dockerfile
     container_name: conpot_modbus
     ports:
@@ -34,7 +34,7 @@ services:
 
   conpot_enip:
     build:
-      context: ./Honepot/Base_Honeynet/enip_trial
+      context: ./Honeypot/Base_Honeynet/enip_trial
       dockerfile: dockerfile
     container_name: conpot_enip
     ports:

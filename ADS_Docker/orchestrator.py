@@ -6,20 +6,22 @@ import re
 import random
 import conpot_generator as cg
 import subprocess
+import os
 
 HOST = '192.168.220.128'
 in_useIP = [129,1,128,35,22,7,13]
-PORT = 8443             # Must match REMOTE_PORT in your sender script
+PORT = 8443       
 SERVER_CERT = '/home/mw/server.pem'
 SERVER_KEY = '/home/mw/server.key'
 CA_CERT = '/home/mw/ca.pem'
+deploy_conpot = {}
+
 
 def start_base_conpot():
-    try:
-        subprocess.run(['sudo', '-v'])
-        subprocess.Popen(f"sudo docker-compose up -d", shell=True,start_new_session=True, stdin=subprocess.DEVNULL)
-    except subprocess.CalledProcessError as e:
-        print(f"Error starting base conpot: {e.stderr}")
+    subprocess.Popen(f"sudo docker-compose up -d", shell=True,start_new_session=True, stdin=subprocess.DEVNULL)
+
+def cleanup():
+    subprocess.run(f"sudo docker-compose down ", shell=True, stdin=subprocess.DEVNULL)
 
 def start_server():
     context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
@@ -59,14 +61,26 @@ def port_number(protocol):
     elif protocol == "enip":
         return 44818
 
-def deploy_conpot(template_name):
-    client = docker.from_env()
-    try:
-        container = client.containers.run(template_name, detach=True, auto_remove=True)
-        print(f"Deployed conpot instance with ID: {container.id}")
-        return container
-    except docker.errors.APIError as e:
-        print(f"Error deploying conpot instance: {e}")
+def turn_on_base_conpot():
+    dir_path = os.getcwd()
+    profiles_dir = os.path.join(dir_path, "conpot_profiles/Base_profiles")
+    folder_names = [name for name in os.listdir(profiles_dir)
+                    if os.path.isdir(os.path.join(profiles_dir, name))]
+    for folder in folder_names:
+        template = dir_path + "/conpot_profiles/Base_profiles/" + folder
+        subprocess.Popen(["conpot", "-f", "--template", template], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+def honeypot_deploy(template_name, port, IP):
+    dir_path = os.getcwd()
+    profiles_dir = os.path.join(dir_path, "Honeypot/Templates")
+    template_path = os.path.join(profiles_dir, template_name)
+    result = subprocess.Popen(f"docker build -t {template_name} {template_path}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if result.wait() != 0:
+        print(f"Error building Docker image for {template_name}")
+    else:
+        subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        print(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
+        deploy_conpot[template_name] += IP, port
 
 def process_alert(alert):
 
@@ -106,9 +120,15 @@ def process_alert(alert):
     else: group = "Unknown"
 
 def main():
-    start_server()
-    print ("[+] Starting orchestrator...")
-    start_base_conpot()
-    print ("[+] Starting conpot instances...")
+    # print ("Starting conpot instances...")
+    # start_base_conpot()
+    # print ("Starting orchestrator...")
+    # start_server()
+    honeypot_deploy("s7-1200", 102, "192.168.220.35")
+    
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    finally:
+        cleanup()
