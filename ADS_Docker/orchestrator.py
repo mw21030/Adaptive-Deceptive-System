@@ -7,8 +7,6 @@ import random
 import conpot_generator as cg
 import subprocess
 import os
-import threading
-
 
 HOST = '192.168.220.128'
 in_useIP = [129,1,128,35,22,7,13]
@@ -17,14 +15,13 @@ SERVER_CERT = '/home/mw/server.pem'
 SERVER_KEY = '/home/mw/server.key'
 CA_CERT = '/home/mw/ca.pem'
 deploy_conpot = {}
-stop_event = threading.Event()
+
 
 
 def start_base_conpot():
     subprocess.Popen(f"sudo docker-compose up -d", shell=True,start_new_session=True, stdin=subprocess.DEVNULL)
 
 def cleanup():
-    stop_event.set()
     subprocess.run(f"sudo docker-compose down ", shell=True, stdin=subprocess.DEVNULL)
     subprocess.run(f"docker rm -f $(docker ps -aq)", shell=True, stdin=subprocess.DEVNULL)
     for deploy in deploy_conpot:
@@ -79,6 +76,7 @@ def honeypot_deploy(template_name, port, IP):
     print (deploy_conpot)
 
 def process_alert(alert):
+
     if re.search(r"write operation attempt detected", alert, re.I):
         port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+write operation attempt detected", alert, re.I).group(1)
         port = port_number(port_name)
@@ -115,10 +113,10 @@ def process_alert(alert):
     else: group = "Unknown"
 
 def main():
-    start_base_conpot()
     print ("Starting conpot instances...")
-    server_thread = threading.Thread(target=start_server, daemon=True)
-    server_thread.start()
+    start_base_conpot()
+    print ("Starting orchestrator...")
+    start_server()
 
 if __name__ == "__main__":
     try:
