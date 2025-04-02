@@ -17,12 +17,15 @@ CA_CERT = '/home/mw/ca.pem'
 deploy_conpot = {}
 
 
+
 def start_base_conpot():
     subprocess.Popen(f"sudo docker-compose up -d", shell=True,start_new_session=True, stdin=subprocess.DEVNULL)
 
 def cleanup():
     subprocess.run(f"sudo docker-compose down ", shell=True, stdin=subprocess.DEVNULL)
     subprocess.run(f"docker rm -f $(docker ps -aq)", shell=True, stdin=subprocess.DEVNULL)
+    for deploy in deploy_conpot:
+        subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
 
 def start_server():
     context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
@@ -62,15 +65,6 @@ def port_number(protocol):
     elif protocol == "enip":
         return 44818
 
-def turn_on_base_conpot():
-    dir_path = os.getcwd()
-    profiles_dir = os.path.join(dir_path, "conpot_profiles/Base_profiles")
-    folder_names = [name for name in os.listdir(profiles_dir)
-                    if os.path.isdir(os.path.join(profiles_dir, name))]
-    for folder in folder_names:
-        template = dir_path + "/conpot_profiles/Base_profiles/" + folder
-        subprocess.Popen(["conpot", "-f", "--template", template], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-
 def honeypot_deploy(template_name, port, IP):
     dir_path = os.getcwd()
     profiles_dir = os.path.join(dir_path, "Honeypot/Templates")
@@ -78,7 +72,7 @@ def honeypot_deploy(template_name, port, IP):
     subprocess.run(f"docker build -t {template_name} {template_path}",shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}",shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
-    deploy_conpot[template_name] += IP, port
+    deploy_conpot[template_name] = IP, port
     print (deploy_conpot)
 
 def process_alert(alert):
