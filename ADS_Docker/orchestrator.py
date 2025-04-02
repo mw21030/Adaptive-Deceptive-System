@@ -113,13 +113,10 @@ def process_alert(alert):
     else: group = "Unknown"
 
 def main():
-    honeypot_deploy("s7-1200", 102, "192.168.220.36")
     print ("Starting conpot instances...")
     start_base_conpot()
     print ("Starting orchestrator...")
     start_server()
-
-    
 
 if __name__ == "__main__":
     try:
