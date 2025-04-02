@@ -115,11 +115,10 @@ def process_alert(alert):
     else: group = "Unknown"
 
 def main():
+    start_base_conpot()
     print ("Starting conpot instances...")
     server_thread = threading.Thread(target=start_server, daemon=True)
     server_thread.start()
-    print ("Starting orchestrator...")
-    start_server()
 
 if __name__ == "__main__":
     try:
