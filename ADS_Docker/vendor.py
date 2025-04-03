@@ -805,7 +805,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10001",
-        "ProductName": "M340-ID-001",
+        "ProductName": "M340-ID-1",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -814,7 +814,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20002",
-        "ProductName": "S7MOD-ID-002",
+        "ProductName": "S7MOD-ID-2",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -823,7 +823,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30003",
-        "ProductName": "ABBMOD-ID-003",
+        "ProductName": "ABBMOD-ID-3",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -832,7 +832,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40004",
-        "ProductName": "HWMOD-ID-004",
+        "ProductName": "HWMOD-ID-4",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -841,7 +841,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50005",
-        "ProductName": "RAMOD-ID-005",
+        "ProductName": "RAMOD-ID-5",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -850,7 +850,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10006",
-        "ProductName": "M340-ID-006",
+        "ProductName": "M340-ID-6",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -859,7 +859,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20007",
-        "ProductName": "S7MOD-ID-007",
+        "ProductName": "S7MOD-ID-7",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -868,7 +868,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30008",
-        "ProductName": "ABBMOD-ID-008",
+        "ProductName": "ABBMOD-ID-8",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -877,7 +877,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40009",
-        "ProductName": "HWMOD-ID-009",
+        "ProductName": "HWMOD-ID-9",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -886,7 +886,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50010",
-        "ProductName": "RAMOD-ID-010",
+        "ProductName": "RAMOD-ID-10",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -895,7 +895,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10011",
-        "ProductName": "M340-ID-011",
+        "ProductName": "M340-ID-11",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -904,7 +904,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20012",
-        "ProductName": "S7MOD-ID-012",
+        "ProductName": "S7MOD-ID-12",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -913,7 +913,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30013",
-        "ProductName": "ABBMOD-ID-013",
+        "ProductName": "ABBMOD-ID-13",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -922,7 +922,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40014",
-        "ProductName": "HWMOD-ID-014",
+        "ProductName": "HWMOD-ID-14",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -931,7 +931,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50015",
-        "ProductName": "RAMOD-ID-015",
+        "ProductName": "RAMOD-ID-15",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -940,7 +940,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10016",
-        "ProductName": "M340-ID-016",
+        "ProductName": "M340-ID-16",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -949,7 +949,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20017",
-        "ProductName": "S7MOD-ID-017",
+        "ProductName": "S7MOD-ID-17",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -958,7 +958,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30018",
-        "ProductName": "ABBMOD-ID-018",
+        "ProductName": "ABBMOD-ID-18",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -967,7 +967,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40019",
-        "ProductName": "HWMOD-ID-019",
+        "ProductName": "HWMOD-ID-19",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -976,7 +976,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50020",
-        "ProductName": "RAMOD-ID-020",
+        "ProductName": "RAMOD-ID-20",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -985,7 +985,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10021",
-        "ProductName": "M340-ID-021",
+        "ProductName": "M340-ID-21",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -994,7 +994,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20022",
-        "ProductName": "S7MOD-ID-022",
+        "ProductName": "S7MOD-ID-22",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1003,7 +1003,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30023",
-        "ProductName": "ABBMOD-ID-023",
+        "ProductName": "ABBMOD-ID-23",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1012,7 +1012,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40024",
-        "ProductName": "HWMOD-ID-024",
+        "ProductName": "HWMOD-ID-24",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1021,7 +1021,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50025",
-        "ProductName": "RAMOD-ID-025",
+        "ProductName": "RAMOD-ID-25",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1030,7 +1030,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10026",
-        "ProductName": "M340-ID-026",
+        "ProductName": "M340-ID-26",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1039,7 +1039,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20027",
-        "ProductName": "S7MOD-ID-027",
+        "ProductName": "S7MOD-ID-27",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1048,7 +1048,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30028",
-        "ProductName": "ABBMOD-ID-028",
+        "ProductName": "ABBMOD-ID-28",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1057,7 +1057,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40029",
-        "ProductName": "HWMOD-ID-029",
+        "ProductName": "HWMOD-ID-29",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1066,7 +1066,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50030",
-        "ProductName": "RAMOD-ID-030",
+        "ProductName": "RAMOD-ID-30",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1075,7 +1075,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10031",
-        "ProductName": "M340-ID-031",
+        "ProductName": "M340-ID-31",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1084,7 +1084,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20032",
-        "ProductName": "S7MOD-ID-032",
+        "ProductName": "S7MOD-ID-32",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1093,7 +1093,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30033",
-        "ProductName": "ABBMOD-ID-033",
+        "ProductName": "ABBMOD-ID-33",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1102,7 +1102,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40034",
-        "ProductName": "HWMOD-ID-034",
+        "ProductName": "HWMOD-ID-34",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1111,7 +1111,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50035",
-        "ProductName": "RAMOD-ID-035",
+        "ProductName": "RAMOD-ID-35",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1120,7 +1120,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10036",
-        "ProductName": "M340-ID-036",
+        "ProductName": "M340-ID-36",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1129,7 +1129,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20037",
-        "ProductName": "S7MOD-ID-037",
+        "ProductName": "S7MOD-ID-37",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1138,7 +1138,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30038",
-        "ProductName": "ABBMOD-ID-038",
+        "ProductName": "ABBMOD-ID-38",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1147,7 +1147,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40039",
-        "ProductName": "HWMOD-ID-039",
+        "ProductName": "HWMOD-ID-39",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1156,7 +1156,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50040",
-        "ProductName": "RAMOD-ID-040",
+        "ProductName": "RAMOD-ID-40",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1165,7 +1165,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10041",
-        "ProductName": "M340-ID-041",
+        "ProductName": "M340-ID-41",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1174,7 +1174,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20042",
-        "ProductName": "S7MOD-ID-042",
+        "ProductName": "S7MOD-ID-42",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1183,7 +1183,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30043",
-        "ProductName": "ABBMOD-ID-043",
+        "ProductName": "ABBMOD-ID-43",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1192,7 +1192,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40044",
-        "ProductName": "HWMOD-ID-044",
+        "ProductName": "HWMOD-ID-44",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1201,7 +1201,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50045",
-        "ProductName": "RAMOD-ID-045",
+        "ProductName": "RAMOD-ID-45",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1210,7 +1210,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10046",
-        "ProductName": "M340-ID-046",
+        "ProductName": "M340-ID-46",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1219,7 +1219,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20047",
-        "ProductName": "S7MOD-ID-047",
+        "ProductName": "S7MOD-ID-47",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1228,7 +1228,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30048",
-        "ProductName": "ABBMOD-ID-048",
+        "ProductName": "ABBMOD-ID-48",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1237,7 +1237,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40049",
-        "ProductName": "HWMOD-ID-049",
+        "ProductName": "HWMOD-ID-49",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1246,7 +1246,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50050",
-        "ProductName": "RAMOD-ID-050",
+        "ProductName": "RAMOD-ID-50",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1255,7 +1255,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10051",
-        "ProductName": "M340-ID-051",
+        "ProductName": "M340-ID-51",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1264,7 +1264,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20052",
-        "ProductName": "S7MOD-ID-052",
+        "ProductName": "S7MOD-ID-52",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1273,7 +1273,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30053",
-        "ProductName": "ABBMOD-ID-053",
+        "ProductName": "ABBMOD-ID-53",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1282,7 +1282,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40054",
-        "ProductName": "HWMOD-ID-054",
+        "ProductName": "HWMOD-ID-54",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1291,7 +1291,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50055",
-        "ProductName": "RAMOD-ID-055",
+        "ProductName": "RAMOD-ID-55",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1300,7 +1300,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10056",
-        "ProductName": "M340-ID-056",
+        "ProductName": "M340-ID-56",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1309,7 +1309,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20057",
-        "ProductName": "S7MOD-ID-057",
+        "ProductName": "S7MOD-ID-57",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1318,7 +1318,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30058",
-        "ProductName": "ABBMOD-ID-058",
+        "ProductName": "ABBMOD-ID-58",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1327,7 +1327,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40059",
-        "ProductName": "HWMOD-ID-059",
+        "ProductName": "HWMOD-ID-59",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1336,7 +1336,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50060",
-        "ProductName": "RAMOD-ID-060",
+        "ProductName": "RAMOD-ID-60",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1345,7 +1345,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10061",
-        "ProductName": "M340-ID-061",
+        "ProductName": "M340-ID-61",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1354,7 +1354,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20062",
-        "ProductName": "S7MOD-ID-062",
+        "ProductName": "S7MOD-ID-62",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1363,7 +1363,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30063",
-        "ProductName": "ABBMOD-ID-063",
+        "ProductName": "ABBMOD-ID-63",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1372,7 +1372,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40064",
-        "ProductName": "HWMOD-ID-064",
+        "ProductName": "HWMOD-ID-64",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1381,7 +1381,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50065",
-        "ProductName": "RAMOD-ID-065",
+        "ProductName": "RAMOD-ID-65",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1390,7 +1390,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10066",
-        "ProductName": "M340-ID-066",
+        "ProductName": "M340-ID-66",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1399,7 +1399,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20067",
-        "ProductName": "S7MOD-ID-067",
+        "ProductName": "S7MOD-ID-67",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1408,7 +1408,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30068",
-        "ProductName": "ABBMOD-ID-068",
+        "ProductName": "ABBMOD-ID-68",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1417,7 +1417,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40069",
-        "ProductName": "HWMOD-ID-069",
+        "ProductName": "HWMOD-ID-69",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1426,7 +1426,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50070",
-        "ProductName": "RAMOD-ID-070",
+        "ProductName": "RAMOD-ID-70",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1435,7 +1435,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10071",
-        "ProductName": "M340-ID-071",
+        "ProductName": "M340-ID-71",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1444,7 +1444,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20072",
-        "ProductName": "S7MOD-ID-072",
+        "ProductName": "S7MOD-ID-72",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1453,7 +1453,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30073",
-        "ProductName": "ABBMOD-ID-073",
+        "ProductName": "ABBMOD-ID-73",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1462,7 +1462,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40074",
-        "ProductName": "HWMOD-ID-074",
+        "ProductName": "HWMOD-ID-74",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1471,7 +1471,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50075",
-        "ProductName": "RAMOD-ID-075",
+        "ProductName": "RAMOD-ID-75",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1480,7 +1480,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10076",
-        "ProductName": "M340-ID-076",
+        "ProductName": "M340-ID-76",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1489,7 +1489,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20077",
-        "ProductName": "S7MOD-ID-077",
+        "ProductName": "S7MOD-ID-77",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1498,7 +1498,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30078",
-        "ProductName": "ABBMOD-ID-078",
+        "ProductName": "ABBMOD-ID-78",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1507,7 +1507,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40079",
-        "ProductName": "HWMOD-ID-079",
+        "ProductName": "HWMOD-ID-79",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1516,7 +1516,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50080",
-        "ProductName": "RAMOD-ID-080",
+        "ProductName": "RAMOD-ID-80",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1525,7 +1525,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10081",
-        "ProductName": "M340-ID-081",
+        "ProductName": "M340-ID-81",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1534,7 +1534,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20082",
-        "ProductName": "S7MOD-ID-082",
+        "ProductName": "S7MOD-ID-82",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1543,7 +1543,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30083",
-        "ProductName": "ABBMOD-ID-083",
+        "ProductName": "ABBMOD-ID-83",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1552,7 +1552,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40084",
-        "ProductName": "HWMOD-ID-084",
+        "ProductName": "HWMOD-ID-84",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1561,7 +1561,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50085",
-        "ProductName": "RAMOD-ID-085",
+        "ProductName": "RAMOD-ID-85",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1570,7 +1570,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10086",
-        "ProductName": "M340-ID-086",
+        "ProductName": "M340-ID-86",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1579,7 +1579,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20087",
-        "ProductName": "S7MOD-ID-087",
+        "ProductName": "S7MOD-ID-87",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1588,7 +1588,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30088",
-        "ProductName": "ABBMOD-ID-088",
+        "ProductName": "ABBMOD-ID-88",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1597,7 +1597,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40089",
-        "ProductName": "HWMOD-ID-089",
+        "ProductName": "HWMOD-ID-89",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1606,7 +1606,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50090",
-        "ProductName": "RAMOD-ID-090",
+        "ProductName": "RAMOD-ID-90",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1615,7 +1615,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10091",
-        "ProductName": "M340-ID-091",
+        "ProductName": "M340-ID-91",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1624,7 +1624,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20092",
-        "ProductName": "S7MOD-ID-092",
+        "ProductName": "S7MOD-ID-92",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1633,7 +1633,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30093",
-        "ProductName": "ABBMOD-ID-093",
+        "ProductName": "ABBMOD-ID-93",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1642,7 +1642,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40094",
-        "ProductName": "HWMOD-ID-094",
+        "ProductName": "HWMOD-ID-94",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1651,7 +1651,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Rockwell Automation",
         "ProductCode": "RAMOD-50095",
-        "ProductName": "RAMOD-ID-095",
+        "ProductName": "RAMOD-ID-95",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1660,7 +1660,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Schneider Electric",
         "ProductCode": "M340-10096",
-        "ProductName": "M340-ID-096",
+        "ProductName": "M340-ID-96",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
@@ -1669,7 +1669,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "ProductCode": "S7MOD-20097",
-        "ProductName": "S7MOD-ID-097",
+        "ProductName": "S7MOD-ID-97",
         "block1": "memoryModbusSlave0BlockA",
         "block2": "memoryModbusSlave0BlockB",
         "block3": "memoryModbusSlave0BlockC",
@@ -1678,7 +1678,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "ABB",
         "ProductCode": "ABBMOD-30098",
-        "ProductName": "ABBMOD-ID-098",
+        "ProductName": "ABBMOD-ID-98",
         "block1": "memoryModbusSlave1BlockA",
         "block2": "memoryModbusSlave1BlockB",
         "block3": "memoryModbusSlave1BlockC",
@@ -1687,7 +1687,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Honeywell",
         "ProductCode": "HWMOD-40099",
-        "ProductName": "HWMOD-ID-099",
+        "ProductName": "HWMOD-ID-99",
         "block1": "memoryModbusSlave2BlockA",
         "block2": "memoryModbusSlave2BlockB",
         "block3": "memoryModbusSlave2BlockC",
