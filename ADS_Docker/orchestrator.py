@@ -101,28 +101,28 @@ def process_alert(alert):
         port = port_number(port_name)
         for i in range(0, 2):
             IP = get_IP()
-            template_name, vendor = cg.generate_conpot(port,IP)
+            template_name = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP)
     elif re.search(r"illegal control command detected", alert, re.I):
         port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+illegal control command detected", alert, re.I).group(1)
         port = port_number(port_name)
         for i in range(0, 2):
             IP = get_IP()
-            template_name, vendor = cg.generate_conpot(port,IP)
+            template_name = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP)
     elif re.search(r"port scan attempt detected", alert, re.I) and not re.search(r"continuous", alert, re.I):
         port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+port scan attempt detected", alert, re.I).group(1)
         port = port_number(port_name)
         for i in range(0, 2):
             IP = get_IP()
-            template_name, vendor = cg.generate_conpot(port,IP)
+            template_name = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP)
     elif re.search(r"continuous port scan detected", alert, re.I):
         port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+continuous port scan detected", alert, re.I).group(1)
         port = port_number(port_name)
         for i in range(0, 2):
             IP = get_IP()
-            template_name, vendor = cg.generate_conpot(port,IP)
+            template_name = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP)
     elif ( re.search(r"potential volumetric attack detected", alert, re.I) or
            re.search(r"repeated connection attempts detected", alert, re.I) or
