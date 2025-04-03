@@ -134,7 +134,7 @@ def template_generator(ip, port, profile_detail, template_name):
         if isinstance(value_data, str) and "conpot.emulators" in value_data:
             ET.SubElement(key, "value", attrib={"type": "function"}).text = value_data
         else:
-            ET.SubElement(key, "value", attrib={"type": "value"}).text = value_data
+            ET.SubElement(key, "value", attrib={"type": "value"}).text = str(value_data)
     
     return pretty_xml(root)
 
@@ -163,7 +163,7 @@ def pretty_xml(element):
     reparsed = minidom.parseString(rough_string)
     return reparsed.toprettyxml(indent="  ")
 
-def generate_enip_xml(ip, port, profile_detail):
+def generate_enip_xml(ip, port, profile_detail, template_name):
     root = ET.Element("enip", attrib={"enabled": "True", "host": ip, "port": str(port)})
     
     # Device information
@@ -180,10 +180,10 @@ def generate_enip_xml(ip, port, profile_detail):
     mode.text = random.choice(["tcp", "udp"])
     
     latency = ET.SubElement(root, "latency")
-    latency.text = random.randrange(0,0.5)
+    latency.text = str(random.uniform(0, 0.5))
     
     timeout = ET.SubElement(root, "timeout")
-    timeout.text = random.randrange(2,20)
+    timeout.text = str(random.randint(2, 20))
     
 
     tags = ET.SubElement(root, "tags")
@@ -424,16 +424,13 @@ def generate_conpot(port, ip):
 
     if port == 44818:
         protocol_name = "enip"
-        xml_data = generate_enip_xml(ip, port, profile_detail
-    ,template_name)
+        xml_data = generate_enip_xml(ip, port, profile_detail, template_name)
     elif port == 102:
         protocol_name = "s7comm"
-        xml_data = generate_s7comm_xml(ip, port, profile_detail
-    ,template_name)
+        xml_data = generate_s7comm_xml(ip, port, profile_detail, template_name)
     elif port == 502:
         protocol_name = "modbus"
-        xml_data = generate_modbus_xml(ip, port, profile_detail
-    ,template_name)
+        xml_data = generate_modbus_xml(ip, port, profile_detail, template_name)
     # Create base directory
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), f"Honeypot/Templates/{template_name}")
     os.makedirs(base_dir, exist_ok=True)
