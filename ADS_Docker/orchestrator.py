@@ -15,17 +15,17 @@ SERVER_CERT = '/home/mw/server.pem'
 SERVER_KEY = '/home/mw/server.key'
 CA_CERT = '/home/mw/ca.pem'
 deploy_conpot = {}
-
-
+stopDeploy = False
 
 def start_base_conpot():
     subprocess.Popen(f"sudo docker-compose up -d", shell=True,start_new_session=True, stdin=subprocess.DEVNULL)
 
 def cleanup():
     subprocess.run(f"sudo docker-compose down ", shell=True, stdin=subprocess.DEVNULL)
-    subprocess.run(f"docker rm -f $(docker ps -aq)", shell=True, stdin=subprocess.DEVNULL)
     for deploy in deploy_conpot:
         subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
+        subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
+        subprocess.run(f"rm -r ./Honeypot/Templates/{deploy}", shell=True, stdin=subprocess.DEVNULL)
 
 def start_server():
     context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
@@ -45,13 +45,33 @@ def start_server():
                     conn, addr = ssock.accept()
                     data = conn.recv(4096)
                     if data:
-                        process_alert(data.decode())
-                        print(f"Received alert: {data.decode()}")
-                        conn.close()
+                        if stopDeploy:
+                            conn.close()
+                            break
+                        else:
+                            process_alert(data.decode())
+                            print(f"Received alert: {data.decode()}")
+                            conn.close()
                 except Exception as e:
                     print("Error:", e)
 
+def removeconpot(template_name):
+    if template_name in deploy_conpot:
+        IP, port, vendor = deploy_conpot[template_name]
+        subprocess.run(f"docker rm -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        ip_last_octet = int(IP.split('.')[-1])
+        if ip_last_octet in in_useIP:
+            in_useIP.remove(ip_last_octet)
+        print(f"Removed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
+        del deploy_conpot[template_name]
+    else:
+        print(f"No conpot instance found with name: {template_name}")
+
 def get_IP():
+    if len(in_useIP) > 245:
+        templates_to_remove = list(deploy_conpot.keys())[:10]
+        for template_name in templates_to_remove:
+            removeconpot(template_name)
     available_IP = [num for num in range(1, 256) if num not in in_useIP]
     IP = f"192.168.220.{random.choice(available_IP)}"
     in_useIP.append(int(IP.split('.')[-1]))
@@ -65,40 +85,45 @@ def port_number(protocol):
     elif protocol == "enip":
         return 44818
 
-def honeypot_deploy(template_name, port, IP):
+def honeypot_deploy(template_name, port, IP, vendor):
     dir_path = os.getcwd()
     profiles_dir = os.path.join(dir_path, "Honeypot/Templates")
     template_path = os.path.join(profiles_dir, template_name)
     subprocess.run(f"docker build -t {template_name} {template_path}",shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}",shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
-    deploy_conpot[template_name] = IP, port
+    deploy_conpot[template_name] = IP, port, vendor 
     print (deploy_conpot)
 
 def process_alert(alert):
-
     if re.search(r"write operation attempt detected", alert, re.I):
         port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+write operation attempt detected", alert, re.I).group(1)
         port = port_number(port_name)
-        IP = get_IP()
-        template_name = cg.generate_conpot(0,port,IP)
-
-
-
+        for i in range(0, 2):
+            IP = get_IP()
+            template_name, vendor = cg.generate_conpot(port,IP)
+            honeypot_deploy(template_name, port, IP)
     elif re.search(r"illegal control command detected", alert, re.I):
-        port = re.search(r"\[([a-zA-Z0-9]+)\]\s+illegal control command detected", alert, re.I)
-        if m:
-            protocol = m.group(1)
+        port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+illegal control command detected", alert, re.I).group(1)
+        port = port_number(port_name)
+        for i in range(0, 2):
+            IP = get_IP()
+            template_name, vendor = cg.generate_conpot(port,IP)
+            honeypot_deploy(template_name, port, IP)
     elif re.search(r"port scan attempt detected", alert, re.I) and not re.search(r"continuous", alert, re.I):
-        group = "Port Scan Attempts"
-        m = re.search(r"\[([a-zA-Z0-9]+)\]\s+port scan attempt detected", alert, re.I)
-        if m:
-            protocol = m.group(1)
+        port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+port scan attempt detected", alert, re.I).group(1)
+        port = port_number(port_name)
+        for i in range(0, 2):
+            IP = get_IP()
+            template_name, vendor = cg.generate_conpot(port,IP)
+            honeypot_deploy(template_name, port, IP)
     elif re.search(r"continuous port scan detected", alert, re.I):
-        group = "Continuous Scanning"
-        m = re.search(r"\[([a-zA-Z0-9]+)\]\s+continuous port scan detected", alert, re.I)
-        if m:
-            protocol = m.group(1)
+        port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+continuous port scan detected", alert, re.I).group(1)
+        port = port_number(port_name)
+        for i in range(0, 2):
+            IP = get_IP()
+            template_name, vendor = cg.generate_conpot(port,IP)
+            honeypot_deploy(template_name, port, IP)
     elif ( re.search(r"potential volumetric attack detected", alert, re.I) or
            re.search(r"repeated connection attempts detected", alert, re.I) or
            re.search(r"generic TCP port scan detected", alert, re.I) or
