@@ -274,7 +274,7 @@ def generate_s7comm_xml(ip, port, profile_detail,template_name):
 
     # Create first ssl element
     ssl = ET.SubElement(system_status_lists, "ssl", attrib={
-        "id": "W#16#xy" + f"{random.randint(0, 255):02X}",
+        "id": "W#16#xy1C",
         "name": "Component Identification"
     })
     # System name
@@ -295,7 +295,7 @@ def generate_s7comm_xml(ip, port, profile_detail,template_name):
     
     # Create second ssl element
     ssl2 = ET.SubElement(system_status_lists, "ssl", attrib={
-        "id": "W#16#xy" + f"{random.randint(0, 255):02X}",
+        "id": "W#16#xy11",
         "name": "Module Identification"
     })
     ET.SubElement(ssl2, "module_identification", attrib={"id": "W#16#0001"}).text = profile_detail.get("sysName","module")
