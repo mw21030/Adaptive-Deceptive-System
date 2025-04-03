@@ -449,8 +449,3 @@ def generate_conpot(port, ip):
         f.write(xml_data)
     
     return template_name,vendor
-
-if __name__ == "__main__":
-    generate_conpot(502, "192.168.220.67")
-    generate_conpot(102, "192.168.220.72")
-    generate_conpot(44818, "192.168.220.69")
