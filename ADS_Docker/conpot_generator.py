@@ -448,4 +448,4 @@ def generate_conpot(port, ip):
     with open(xml_file_path, "w") as f:
         f.write(xml_data)
     
-    return template_name
+    return template_name,vendor
