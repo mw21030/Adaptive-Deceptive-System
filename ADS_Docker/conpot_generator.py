@@ -134,7 +134,7 @@ def template_generator(ip, port, profile_detail, template_name):
         if isinstance(value_data, str) and "conpot.emulators" in value_data:
             ET.SubElement(key, "value", attrib={"type": "function"}).text = value_data
         else:
-            ET.SubElement(key, "value", attrib={"type": "value"}).text = str(value_data)
+            ET.SubElement(key, "value", attrib={"type": "value"}).text =f'"{value_data}"'
     
     return pretty_xml(root)
 
