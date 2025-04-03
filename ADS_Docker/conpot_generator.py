@@ -44,7 +44,7 @@ def template_generator(ip, port, profile_detail, template_name):
         description = f"{vendor} {unit} with ENIP interface"
     elif port == 102:  # S7comm
         protocol = "s7comm, SNMP, HTTP, MODBUS"
-        unit = profile_detail.get('deviceName', 'S7-1200')
+        unit = profile_detail.get('ProductName', 'S7-1200')
         vendor = profile_detail.get('Vendor', 'Siemens')
         description = f"{vendor} {unit} with S7comm interface"
     elif port == 502:  # MODBUS
@@ -72,7 +72,7 @@ def template_generator(ip, port, profile_detail, template_name):
     
     # Common keys for all protocols
     keys = {
-        "SystemName": f"{profile_detail.get('ProductName', 'PLC')}_{random.randint(1, 100)}",
+        "SystemName": profile_detail.get('ProductName', 'PLC'),
         "FacilityName": "Bristol Food Factory",  # Can be made dynamic if needed
         "Uptime": "conpot.emulators.misc.uptime.Uptime"
     }
@@ -80,7 +80,7 @@ def template_generator(ip, port, profile_detail, template_name):
     # Add protocol-specific keys
     if port == 102:  # S7comm
         keys.update({
-            "SystemDescription": profile_detail.get('deviceName', 'Siemens PLC'),
+            "SystemDescription": profile_detail.get('ProductName', 'Siemens PLC'),
             "sysObjectID": "0.0",
             "sysContact": profile_detail.get('Vendor', 'Siemens AG'),
             "sysName": profile_detail.get('sysName', '6ES7 214-1AG40-0XB0'),
@@ -116,7 +116,7 @@ def template_generator(ip, port, profile_detail, template_name):
         keys.update({
             "SystemDescription": profile_detail.get('deviceType', 'PLC'),
             "sysObjectID": random.randint(1, 255),
-            "SystemName": profile_detail.get('productName', 'ControlLogix'),
+            "SystemName": profile_detail.get('ProductName', 'ControlLogix'),
         })
     
     elif port == 502:  # MODBUS
@@ -170,7 +170,7 @@ def generate_enip_xml(ip, port, profile_detail):
     device_info = ET.SubElement(root, "device_info")
     
     ET.SubElement(device_info, "VendorId").text = profile_detail.get('VendorID', 'Generic PLC')
-    ET.SubElement(device_info, "ProductName").text = profile_detail.get('productName', 'Generic PLC')
+    ET.SubElement(device_info, "ProductName").text = profile_detail.get('ProductName', 'Generic PLC')
     ET.SubElement(device_info, "DeviceType").text = profile_detail.get('deviceType', str(random.randint(1,15)))
     ET.SubElement(device_info, "SerialNumber").text = profile_detail.get('SerialNumber', str(random.randint(1000000000, 9999999999)))
     ET.SubElement(device_info, "ProductRevision").text = profile_detail.get('ProductRevision', str(random.randint(1000,2000)))
@@ -454,4 +454,6 @@ def generate_conpot(port, ip):
     return template_name,vendor
 
 if __name__ == "__main__":
-    generate_conpot(502, "192.168.0.0")
+    generate_conpot(502, "192.168.220.67")
+    generate_conpot(102, "192.168.220.72")
+    generate_conpot(44818, "192.168.220.69")
