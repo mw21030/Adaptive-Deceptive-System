@@ -156,7 +156,7 @@ def generate_enip_xml(ip, port, profile_detail, template_name):
     mode.text = random.choice(["tcp", "udp"])
     
     latency = ET.SubElement(root, "latency")
-    latency.text = str(random.uniform(0, 0.5))
+    latency.text = str(round(random.uniform(0, 0.5), 1))
     
     timeout = ET.SubElement(root, "timeout")
     timeout.text = str(random.randint(2, 20))
@@ -172,9 +172,8 @@ def generate_enip_xml(ip, port, profile_detail, template_name):
 
     TAG_CATEGORIES = {
         "inputs": [
-            {"tag_name": "Sensor", "types": ["BOOL", "INT", "REAL"]},
-            {"tag_name": "Switch", "types": ["BOOL"]},
-            {"tag_name": "Level", "types": ["REAL", "INT"]},
+            {"tag_name": "SensorOutput", "types": ["BOOL", "INT", "REAL"]},
+            {"tag_name": "SensorInput", "types": ["BOOL", "INT", "REAL"]},
             {"tag_name": "Pressure", "types": ["REAL"]},
             {"tag_name": "Temperature", "types": ["REAL"]}
         ],
@@ -223,11 +222,11 @@ def generate_enip_xml(ip, port, profile_detail, template_name):
             suffix = random.randint(1, 99)
             
             tag = {
-                "name": f"{tag_template['tag_name']}{suffix}",
+                "name": f"{tag_template['tag_name']}",
                 "type": tag_type,
                 "size": TAG_TYPES[tag_type]["size"],
                 "value": generate_random_tag_value(tag_type),
-                "addr": f"{random.randint(10, 40)}/{random.randint(0, 9)}/{addr_counter}"
+                "addr": f"{random.randint(10, 40)}/{random.randint(1, 9)}/{addr_counter}"
             }
             
             addr_counter += 1
@@ -426,7 +425,7 @@ def generate_conpot(port, ip):
     
     return template_name,vendor
 
-# if __name__ == "__main__":
-#     generate_conpot(102,"192.168.220.0")
-#     generate_conpot(502,"192.168.220.0")
-#     generate_conpot(44818,"192.168.220.0")
+if __name__ == "__main__":
+    generate_conpot(102,"192.168.220.0")
+    generate_conpot(502,"192.168.220.0")
+    generate_conpot(44818,"192.168.220.0")
