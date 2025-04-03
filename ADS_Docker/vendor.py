@@ -3,7 +3,7 @@ PRODUCTS_DATA = {
     "102":[{
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG04-0ABA",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000001",
         "module_type": "CPU 315-2 DP",
         "firmware": "2.6.9"
@@ -11,7 +11,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG05-0ABB",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000002",
         "module_type": "CPU 1515-2 PN/DP",
         "firmware": "3.0.1"
@@ -19,7 +19,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG07-0ABC",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000003",
         "module_type": "CPU 312-5 PN/DP",
         "firmware": "2.5.4"
@@ -27,7 +27,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG04-0ABD",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000004",
         "module_type": "CPU 317-2 DP",
         "firmware": "2.6.9"
@@ -35,7 +35,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG05-0ABE",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000005",
         "module_type": "CPU 315-2 DP",
         "firmware": "3.0.1"
@@ -43,7 +43,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG07-0ABF",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000006",
         "module_type": "CPU 1515-2 PN/DP",
         "firmware": "2.5.4"
@@ -51,7 +51,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG04-0ABG",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000007",
         "module_type": "CPU 312-5 PN/DP",
         "firmware": "2.6.9"
@@ -59,7 +59,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG05-0ABH",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000008",
         "module_type": "CPU 317-2 DP",
         "firmware": "3.0.1"
@@ -67,7 +67,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG07-0ABI",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000009",
         "module_type": "CPU 315-2 DP",
         "firmware": "2.5.4"
@@ -75,7 +75,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG04-0ABJ",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000010",
         "module_type": "CPU 1515-2 PN/DP",
         "firmware": "2.6.9"
@@ -83,7 +83,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG05-0ABK",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000011",
         "module_type": "CPU 312-5 PN/DP",
         "firmware": "3.0.1"
@@ -91,7 +91,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG07-0ABL",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000012",
         "module_type": "CPU 317-2 DP",
         "firmware": "2.5.4"
@@ -99,7 +99,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG04-0ABM",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000013",
         "module_type": "CPU 315-2 DP",
         "firmware": "2.6.9"
@@ -107,7 +107,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG05-0ABN",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000014",
         "module_type": "CPU 1515-2 PN/DP",
         "firmware": "3.0.1"
@@ -115,7 +115,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG07-0ABO",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000015",
         "module_type": "CPU 312-5 PN/DP",
         "firmware": "2.5.4"
@@ -123,7 +123,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG04-0ABP",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000016",
         "module_type": "CPU 317-2 DP",
         "firmware": "2.6.9"
@@ -131,7 +131,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG05-0ABQ",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000017",
         "module_type": "CPU 315-2 DP",
         "firmware": "3.0.1"
@@ -139,7 +139,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG07-0ABR",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000018",
         "module_type": "CPU 1515-2 PN/DP",
         "firmware": "2.5.4"
@@ -147,7 +147,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG04-0ABS",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000019",
         "module_type": "CPU 312-5 PN/DP",
         "firmware": "2.6.9"
@@ -155,7 +155,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 313-6BG05-0ABT",
-        "deviceName": "S7-300",
+        "ProductName": "S7-300",
         "s7_id": "S C-X4U1000020",
         "module_type": "CPU 317-2 DP",
         "firmware": "3.0.1"
@@ -163,7 +163,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG04-0ABU",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000021",
         "module_type": "CPU 412-3 PN",
         "firmware": "3.1.7"
@@ -171,7 +171,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG05-0ABV",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000022",
         "module_type": "CPU 414-3 PN",
         "firmware": "2.8.3"
@@ -179,7 +179,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG07-0ABW",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000023",
         "module_type": "CPU 416-3 PN",
         "firmware": "3.1.7"
@@ -187,7 +187,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG04-0ABX",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000024",
         "module_type": "CPU 416-5 PN",
         "firmware": "2.8.3"
@@ -195,7 +195,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG05-0ABY",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000025",
         "module_type": "CPU 412-4 PN",
         "firmware": "3.1.7"
@@ -203,7 +203,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG07-0ABZ",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000026",
         "module_type": "CPU 414-1 PN",
         "firmware": "2.8.3"
@@ -211,7 +211,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG04-0ACA",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000027",
         "module_type": "CPU 412-1 PN",
         "firmware": "3.1.7"
@@ -219,7 +219,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG05-0ACB",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000028",
         "module_type": "CPU 412-3 PN",
         "firmware": "2.8.3"
@@ -227,7 +227,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG07-0ACC",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000029",
         "module_type": "CPU 414-3 PN",
         "firmware": "3.1.7"
@@ -235,7 +235,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG04-0ACD",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000030",
         "module_type": "CPU 416-3 PN",
         "firmware": "2.8.3"
@@ -243,7 +243,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG05-0ACE",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000031",
         "module_type": "CPU 416-5 PN",
         "firmware": "3.1.7"
@@ -251,7 +251,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG07-0ACF",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000032",
         "module_type": "CPU 412-4 PN",
         "firmware": "2.8.3"
@@ -259,7 +259,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG04-0ACG",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000033",
         "module_type": "CPU 414-1 PN",
         "firmware": "3.1.7"
@@ -267,7 +267,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 323-6BG05-0ACH",
-        "deviceName": "S7-400",
+        "ProductName": "S7-400",
         "s7_id": "S C-X4U1000034",
         "module_type": "CPU 412-1 PN",
         "firmware": "2.8.3"
@@ -275,7 +275,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 317-6BG04-0ACI",
-        "deviceName": "S7-1200",
+        "ProductName": "S7-1200",
         "s7_id": "S C-X4U1000035",
         "module_type": "CPU 1212C",
         "firmware": "2.6.9"
@@ -283,7 +283,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 317-6BG05-0ACJ",
-        "deviceName": "S7-1200",
+        "ProductName": "S7-1200",
         "s7_id": "S C-X4U1000036",
         "module_type": "CPU 1214C",
         "firmware": "3.0.1"
@@ -291,7 +291,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 317-6BG07-0ACK",
-        "deviceName": "S7-1200",
+        "ProductName": "S7-1200",
         "s7_id": "S C-X4U1000037",
         "module_type": "CPU 1215C",
         "firmware": "2.5.4"
@@ -299,7 +299,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 317-6BG04-0ACL",
-        "deviceName": "S7-1200",
+        "ProductName": "S7-1200",
         "s7_id": "S C-X4U1000038",
         "module_type": "CPU 1212C",
         "firmware": "2.6.9"
@@ -307,7 +307,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 317-6BG05-0ACM",
-        "deviceName": "S7-1200",
+        "ProductName": "S7-1200",
         "s7_id": "S C-X4U1000039",
         "module_type": "CPU 1214C",
         "firmware": "3.0.1"
@@ -315,7 +315,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 317-6BG07-0ACN",
-        "deviceName": "S7-1200",
+        "ProductName": "S7-1200",
         "s7_id": "S C-X4U1000040",
         "module_type": "CPU 1215C",
         "firmware": "2.5.4"
@@ -323,7 +323,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 317-6BG04-0ACO",
-        "deviceName": "S7-1200",
+        "ProductName": "S7-1200",
         "s7_id": "S C-X4U1000041",
         "module_type": "CPU 1212C",
         "firmware": "2.6.9"
@@ -331,7 +331,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 317-6BG05-0ACP",
-        "deviceName": "S7-1200",
+        "ProductName": "S7-1200",
         "s7_id": "S C-X4U1000042",
         "module_type": "CPU 1214C",
         "firmware": "3.0.1"
@@ -339,7 +339,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 317-6BG07-0ACQ",
-        "deviceName": "S7-1200",
+        "ProductName": "S7-1200",
         "s7_id": "S C-X4U1000043",
         "module_type": "CPU 1215C",
         "firmware": "2.5.4"
@@ -347,7 +347,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ACR",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000044",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -355,7 +355,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ACS",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000045",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -363,7 +363,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0ACT",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000046",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -371,7 +371,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ACU",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000047",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -379,7 +379,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ACV",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000048",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -387,7 +387,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0ACW",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000049",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -395,7 +395,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ACX",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000050",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -403,7 +403,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ACY",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000051",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -411,7 +411,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0ACZ",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000052",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -419,7 +419,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ADA",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000053",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -427,7 +427,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ADB",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000054",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -435,7 +435,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0ADC",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000055",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -443,7 +443,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ADD",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000056",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -451,7 +451,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ADE",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000057",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -459,7 +459,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0ADF",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000058",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -467,7 +467,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ADG",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000059",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -475,7 +475,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ADH",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000060",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -483,7 +483,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0ADI",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000061",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -491,7 +491,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ADJ",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000062",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -499,7 +499,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ADK",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000063",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -507,7 +507,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0ADL",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000064",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -515,7 +515,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ADM",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000065",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -523,7 +523,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ADN",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000066",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -531,7 +531,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0ADO",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000067",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -539,7 +539,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ADP",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000068",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -547,7 +547,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ADQ",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000069",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -555,7 +555,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0ADR",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000070",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -563,7 +563,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ADS",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000071",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -571,7 +571,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ADT",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000072",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -579,7 +579,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0ADU",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000073",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -587,7 +587,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ADV",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000074",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -595,7 +595,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ADW",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000075",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -603,7 +603,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0ADX",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000076",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -611,7 +611,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0ADY",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000077",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -619,7 +619,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0ADZ",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000078",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -627,7 +627,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0AEA",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000079",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -635,7 +635,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0AEB",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000080",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -643,7 +643,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0AEC",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000081",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -651,7 +651,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0AED",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000082",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -659,7 +659,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0AEE",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000083",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -667,7 +667,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0AEF",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000084",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -675,7 +675,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0AEG",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000085",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -683,7 +683,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0AEH",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000086",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -691,7 +691,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0AEI",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000087",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -699,7 +699,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0AEJ",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000088",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -707,7 +707,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0AEK",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000089",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -715,7 +715,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0AEL",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000090",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -723,7 +723,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0AEM",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000091",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -731,7 +731,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0AEN",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000092",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -739,7 +739,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0AEO",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000093",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -747,7 +747,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0AEP",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000094",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -755,7 +755,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0AEQ",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000095",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -763,7 +763,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0AER",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000096",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -771,7 +771,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0AES",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000097",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"
@@ -779,7 +779,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG04-0AET",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000098",
         "module_type": "CPU 1511-1 PN",
         "firmware": "3.1.7"
@@ -787,7 +787,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG05-0AEU",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000099",
         "module_type": "CPU 1513-1 PN",
         "firmware": "2.8.3"
@@ -795,7 +795,7 @@ PRODUCTS_DATA = {
     {
         "Vendor": "Siemens",
         "sysName": "6ES7 321-6BG07-0AEV",
-        "deviceName": "S7-1500",
+        "ProductName": "S7-1500",
         "s7_id": "S C-X4U1000100",
         "module_type": "CPU 1515-3 PN/DP",
         "firmware": "3.0.1"

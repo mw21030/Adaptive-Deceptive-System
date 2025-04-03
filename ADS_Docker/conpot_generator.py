@@ -41,23 +41,17 @@ def template_generator(ip, port, profile_detail, template_name):
         protocol = "ENIP"
         unit = profile_detail.get('unit', 'ControlLogix')
         vendor = profile_detail.get('Vendor', 'Allen-Bradley')
-        description = f"{vendor} {unit} with ENIP interface"
+        description = f"simulation of a basic {vendor} {unit} with {protocol} in {ip}:{port}"
     elif port == 102:  # S7comm
-        protocol = "s7comm, SNMP, HTTP, MODBUS"
+        protocol = "s7comm"
         unit = profile_detail.get('ProductName', 'S7-1200')
         vendor = profile_detail.get('Vendor', 'Siemens')
-        description = f"{vendor} {unit} with S7comm interface"
+        description = f"simulation of a basic {vendor} {unit} with {protocol} in {ip}:{port}"
     elif port == 502:  # MODBUS
         protocol = "MODBUS"
         unit = profile_detail.get('ProductName', 'Generic PLC')
         vendor = profile_detail.get('Vendor', 'Generic')
-        description = f"{vendor} {unit} with Modbus interface"
-    else:
-        # Default fallback for unknown protocols
-        protocol = "Unknown"
-        unit = "Generic Device"
-        vendor = "Generic"
-        description = f"Generic industrial device on port {port}"
+        description = f"simulation of a basic {vendor} {unit} with {protocol} in {ip}:{port}"
     
     # Add entity information
     ET.SubElement(template, "entity", attrib={"name": "unit"}).text = unit 
@@ -72,7 +66,7 @@ def template_generator(ip, port, profile_detail, template_name):
     
     # Common keys for all protocols
     keys = {
-        "SystemName": profile_detail.get('ProductName', 'PLC'),
+        "SystemName": profile_detail.get('Vendor', 'PLC') + "_PLC" ,
         "FacilityName": "Bristol Food Factory",  # Can be made dynamic if needed
         "Uptime": "conpot.emulators.misc.uptime.Uptime"
     }
@@ -80,37 +74,19 @@ def template_generator(ip, port, profile_detail, template_name):
     # Add protocol-specific keys
     if port == 102:  # S7comm
         keys.update({
-            "SystemDescription": profile_detail.get('ProductName', 'Siemens PLC'),
-            "sysObjectID": "0.0",
-            "sysContact": profile_detail.get('Vendor', 'Siemens AG'),
+            "SystemDescription": profile_detail.get("Vendor", "Siemens") + " " + profile_detail.get('ProductName', 'Siemens PLC'),
+            "sysObjectID": round(random.uniform(0.0, 9.9), 1),
+            "sysContact": profile_detail.get('Vendor', 'Siemens AG') + " AG",
             "sysName": profile_detail.get('sysName', '6ES7 214-1AG40-0XB0'),
             "module": profile_detail.get('sysName', '6ES7 214-1AG40-0XB0'),
             "hardware": profile_detail.get('sysName', '6ES7 214-1AG40-0XB0'),
             "firmware": profile_detail.get('firmware', '4.5.1'),
             "sysLocation": f"Level {random.randint(1, 9)}, Rack {random.randint(1, 20)}",
-            "Copyright": "Original Equipment",
+            "Copyright": "Original " + profile_detail.get("Vendor", "Siemens") +" Equipment",
             "s7_id": profile_detail.get('s7_id', str(random.randint(10000000, 99999999))),
             "s7_module_type": profile_detail.get('module_type', 'CPU 1214C'),
             "empty": ""
         })
-        
-        # Add memory blocks for S7/Modbus
-        blocks_config = {
-            "memoryModbusSlave0BlockA": {"size": 128, "range": (0, 1)},
-            "memoryModbusSlave0BlockB": {"size": 32, "range": (0, 1)},
-            "memoryModbusSlave255BlockA": {"size": 128, "range": (0, 1)},
-            "memoryModbusSlave255BlockB": {"size": 32, "range": (0, 1)},
-            "memoryModbusSlave1BlockA": {"size": 128, "range": (0, 1)},
-            "memoryModbusSlave1BlockB": {"size": 32, "range": (0, 1)},
-            "memoryModbusSlave2BlockC": {"size": 8, "range": (0, 1)},
-            "memoryModbusSlave2BlockD": {"size": 32, "fixed": 0}
-        }
-        
-        for block_name, config in blocks_config.items():
-            if "fixed" in config:
-                keys[block_name] = f"[{config['fixed']} for b in range(0,{config['size']})]"
-            else:
-                keys[block_name] = f"[random.randint({config['range'][0]},{config['range'][1]}) for b in range(0,{config['size']})]"
     
     elif port == 44818:  # ENIP
         keys.update({
@@ -280,15 +256,15 @@ def generate_s7comm_xml(ip, port, profile_detail,template_name):
     # System name
     ET.SubElement(ssl, "system_name", attrib={"id": "W#16#0001"}).text = "SystemName"
     # Module name
-    ET.SubElement(ssl, "module_name", attrib={"id": "W#16#0002"}).text = profile_detail.get("sysName", "sysName")
+    ET.SubElement(ssl, "module_name", attrib={"id": "W#16#0002"}).text = "sysName"
     # Plant identification
     ET.SubElement(ssl, "plant_ident", attrib={"id": "W#16#0003"}).text = "FacilityName"
     # Copyright
     ET.SubElement(ssl, "copyright", attrib={"id": "W#16#0004"}).text = "Copyright"
     # Serial number
-    ET.SubElement(ssl, "serial", attrib={"id": "W#16#0005"}).text = profile_detail.get("s7_id", "SerialNumber")
+    ET.SubElement(ssl, "serial", attrib={"id": "W#16#0005"}).text = "s7_id"
     # Module type name
-    ET.SubElement(ssl, "module_type_name", attrib={"id": "z#16#0007"}).text = profile_detail.get("module_type", "s7_module_type")   
+    ET.SubElement(ssl, "module_type_name", attrib={"id": "z#16#0007"}).text = "s7_module_type"
     ET.SubElement(ssl, "oem_id", attrib={"id": "W#16#000A"}).text = "empty"
     # Location
     ET.SubElement(ssl, "location", attrib={"id": "W#16#000B"}).text = "empty"
@@ -298,9 +274,9 @@ def generate_s7comm_xml(ip, port, profile_detail,template_name):
         "id": "W#16#xy11",
         "name": "Module Identification"
     })
-    ET.SubElement(ssl2, "module_identification", attrib={"id": "W#16#0001"}).text = profile_detail.get("sysName","module")
-    ET.SubElement(ssl2, "hardware_identification", attrib={"id": "W#16#0006"}).text = profile_detail.get("sysName", "hardware")
-    ET.SubElement(ssl2, "firmware_identification", attrib={"id": "W#16#0006"}).text = profile_detail.get("firmware", "firmware")
+    ET.SubElement(ssl2, "module_identification", attrib={"id": "W#16#0001"}).text = "module"
+    ET.SubElement(ssl2, "hardware_identification", attrib={"id": "W#16#0006"}).text = "hardware"
+    ET.SubElement(ssl2, "firmware_identification", attrib={"id": "W#16#0006"}).text = "firmware"
     
     return pretty_xml(root)
 
@@ -449,3 +425,8 @@ def generate_conpot(port, ip):
         f.write(xml_data)
     
     return template_name,vendor
+
+# if __name__ == "__main__":
+#     generate_conpot(102,"192.168.220.0")
+#     generate_conpot(502,"192.168.220.0")
+#     generate_conpot(44818,"192.168.220.0")
