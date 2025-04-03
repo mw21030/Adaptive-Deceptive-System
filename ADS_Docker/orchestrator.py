@@ -24,7 +24,6 @@ def cleanup():
     subprocess.run(f"sudo docker-compose down ", shell=True, stdin=subprocess.DEVNULL)
     for deploy in deploy_conpot:
         subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
-        subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
         subprocess.run(f"rm -r ./Honeypot/Templates/{deploy}", shell=True, stdin=subprocess.DEVNULL)
 
 def start_server():
