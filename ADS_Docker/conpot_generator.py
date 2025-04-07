@@ -431,6 +431,6 @@ def generate_conpot(port, ip, tcp = any):
     return template_name,vendor
 
 if __name__ == "__main__":
-    # generate_conpot(102,"192.168.220.0")
-    # generate_conpot(502,"192.168.220.0")
-    # generate_conpot(44818,"192.168.220.0",tcp = True)
+    generate_conpot(102,"192.168.220.0")
+    generate_conpot(502,"192.168.220.0")
+    generate_conpot(44818,"192.168.220.0",tcp = True)
