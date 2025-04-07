@@ -324,7 +324,7 @@ def generate_modbus_xml(ip, port, profile_detail, template_name):
         
     # Set delay
     delay = ET.SubElement(root, "delay")
-    delay.text = str(random.choice(range(10, 200)))
+    delay.text = str(random.choice(range(10, 100)))
     
     # Create slaves section
     slaves = ET.SubElement(root, "slaves")
