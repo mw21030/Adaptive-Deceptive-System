@@ -8,6 +8,7 @@ import conpot_generator as cg
 import subprocess
 import os
 
+# Configuration
 HOST = '192.168.220.128'
 in_useIP = [129,1,128,35,22,7,13]
 PORT = 8443       
