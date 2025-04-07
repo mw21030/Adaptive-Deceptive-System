@@ -93,7 +93,6 @@ def honeypot_deploy(template_name, port, IP, vendor):
     subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}",shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     print(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
     deploy_conpot[template_name] = IP, port, vendor 
-    print (deploy_conpot)
 
 def process_alert(alert):
     if re.search(r"write operation attempt detected", alert, re.I):
