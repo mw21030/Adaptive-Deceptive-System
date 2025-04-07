@@ -139,7 +139,7 @@ def pretty_xml(element):
     reparsed = minidom.parseString(rough_string)
     return reparsed.toprettyxml(indent="  ")
 
-def generate_enip_xml(ip, port, profile_detail, template_name):
+def generate_enip_xml(ip, port, profile_detail, tcp = any):
     root = ET.Element("enip", attrib={"enabled": "True", "host": ip, "port": str(port)})
     
     # Device information
@@ -153,7 +153,12 @@ def generate_enip_xml(ip, port, profile_detail, template_name):
     ET.SubElement(device_info, "ProductCode").text = profile_detail.get('ProductCode', str(random.randint(1,100)))
     
     mode = ET.SubElement(root, "mode")
-    mode.text = random.choice(["tcp", "udp"])
+    if tcp == False:
+        mode.text = "udp"
+    elif tcp == True:
+        mode.text = "tcp"
+    else:
+        mode.text = random.choice(["tcp", "udp"])
     
     latency = ET.SubElement(root, "latency")
     latency.text = str(round(random.uniform(0, 0.5), 1))
@@ -388,7 +393,7 @@ def generate_modbus_xml(ip, port, profile_detail, template_name):
             }    
     return pretty_xml(root)
 
-def generate_conpot(port, ip):
+def generate_conpot(port, ip, tcp = any):
     port_name = port_convert(port)
     template_name = f"{port_name}_{ip}"
     profile_detail= get_random_vendor_data(port)
@@ -399,7 +404,7 @@ def generate_conpot(port, ip):
 
     if port == 44818:
         protocol_name = "enip"
-        xml_data = generate_enip_xml(ip, port, profile_detail, template_name)
+        xml_data = generate_enip_xml(ip, port, profile_detail,tcp)
     elif port == 102:
         protocol_name = "s7comm"
         xml_data = generate_s7comm_xml(ip, port, profile_detail, template_name)
@@ -428,4 +433,4 @@ def generate_conpot(port, ip):
 if __name__ == "__main__":
     generate_conpot(102,"192.168.220.0")
     generate_conpot(502,"192.168.220.0")
-    generate_conpot(44818,"192.168.220.0")
+    generate_conpot(44818,"192.168.220.0",tcp = True)

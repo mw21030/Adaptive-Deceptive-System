@@ -110,9 +110,8 @@ def process_alert(alert):
             template_name, vendor = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP, vendor)
     elif re.search(r"port scan attempt detected", alert, re.I) and not re.search(r"continuous", alert, re.I):
-        port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+port scan attempt detected", alert, re.I).group(1)
-        port = port_number(port_name)
         for i in range(0, 2):
+            port = random.choice([502, 102,44818])
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP, vendor)
@@ -123,18 +122,36 @@ def process_alert(alert):
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP, vendor)
-    elif ( re.search(r"potential volumetric attack detected", alert, re.I) or
-           re.search(r"repeated connection attempts detected", alert, re.I) or
-           re.search(r"generic TCP port scan detected", alert, re.I) or
-           re.search(r"generic UDP port scan detected", alert, re.I) or
-           re.search(r"minimal packet fingerprinting attempt detected", alert, re.I) or
-           re.search(r"suspicious ENIP packet length detected", alert, re.I) ):
-        group = "General Anomalous Behavior"
-        # For general alerts, extract the first tag in square brackets (could be 'bruteforce', 'ddos', etc.)
-        m = re.search(r"\[([a-zA-Z0-9]+)\]", alert)
-        if m:
-            protocol = m.group(1)
-    else: group = "Unknown"
+    elif re.search(r"generic UDP port scan detected", alert, re.I):
+        port = 44818
+        for i in range(0, 2):
+            IP = get_IP()
+            template_name, vendor = cg.generate_conpot(port,IP, tcp = False)
+            honeypot_deploy(template_name, port, IP, vendor)
+    elif re.search(r"generic TCP port scan detected", alert, re.I):
+        for i in range(0, 2):
+            port = random.choice([502, 102,44818])
+            IP = get_IP()
+            template_name, vendor = cg.generate_conpot(port,IP, tcp = True)
+            honeypot_deploy(template_name, port, IP, vendor)
+    elif (re.search(r"potential volumetric attack detected", alert, re.I) or re.search(r"repeated connection attempts detected", alert, re.I)):
+        for i in range(0, 2):
+            port = random.choice([502, 102,44818])
+            IP = get_IP()
+            template_name, vendor = cg.generate_conpot(port,IP)
+            honeypot_deploy(template_name, port, IP, vendor) 
+    elif re.search(r"suspicious ENIP packet length detected", alert, re.I):
+        port = 44818
+        for i in range(0, 2):
+            IP = get_IP()
+            template_name, vendor = cg.generate_conpot(port,IP)
+            honeypot_deploy(template_name, port, IP, vendor)
+    elif re.search(r"minimal packet fingerprinting attempt detected", alert, re.I):
+        port = random.choice([502, 102,44818])
+        for i in range(0, 2):
+            IP = get_IP()
+            template_name, vendor = cg.generate_conpot(port,IP)
+            honeypot_deploy(template_name, port, IP, vendor)
 
 def main():
     print ("Starting conpot instances...")
