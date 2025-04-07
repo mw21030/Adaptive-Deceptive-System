@@ -56,8 +56,6 @@ def tail_alerts():
                         last_sent[dedup_key] = current_time
                         continue
                     else:
-                        print(current_time - last_time)
-                        print(f"[ALERT] {line.strip()}")
                         last_sent[dedup_key] = current_time
                         try:
                             with socket.create_connection((REMOTE_IP, REMOTE_PORT), timeout=5) as raw_sock:

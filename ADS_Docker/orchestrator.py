@@ -98,19 +98,19 @@ def process_alert(alert):
     if re.search(r"write operation attempt detected", alert, re.I):
         port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+write operation attempt detected", alert, re.I).group(1)
         port = port_number(port_name)
-        for i in range(0, 2):
+        for i in range(0, 3):
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP, vendor)
     elif re.search(r"illegal control command detected", alert, re.I):
         port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+illegal control command detected", alert, re.I).group(1)
         port = port_number(port_name)
-        for i in range(0, 2):
+        for i in range(0, 3):
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP, vendor)
     elif re.search(r"port scan attempt detected", alert, re.I) and not re.search(r"continuous", alert, re.I):
-        for i in range(0, 2):
+        for i in range(0, 3):
             port = random.choice([502, 102,44818])
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP)
@@ -118,37 +118,37 @@ def process_alert(alert):
     elif re.search(r"continuous port scan detected", alert, re.I):
         port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+continuous port scan detected", alert, re.I).group(1)
         port = port_number(port_name)
-        for i in range(0, 2):
+        for i in range(0, 3):
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP, vendor)
     elif re.search(r"generic UDP port scan detected", alert, re.I):
         port = 44818
-        for i in range(0, 2):
+        for i in range(0, 3):
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP, tcp = False)
             honeypot_deploy(template_name, port, IP, vendor)
     elif re.search(r"generic TCP port scan detected", alert, re.I):
-        for i in range(0, 2):
+        for i in range(0, 3):
             port = random.choice([502, 102,44818])
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP, tcp = True)
             honeypot_deploy(template_name, port, IP, vendor)
     elif (re.search(r"potential volumetric attack detected", alert, re.I) or re.search(r"repeated connection attempts detected", alert, re.I)):
-        for i in range(0, 2):
+        for i in range(0, 3):
             port = random.choice([502, 102,44818])
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP, vendor) 
     elif re.search(r"suspicious ENIP packet length detected", alert, re.I):
         port = 44818
-        for i in range(0, 2):
+        for i in range(0, 3):
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP, vendor)
     elif re.search(r"minimal packet fingerprinting attempt detected", alert, re.I):
         port = random.choice([502, 102,44818])
-        for i in range(0, 2):
+        for i in range(0, 3):
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP, vendor)
