@@ -123,8 +123,8 @@ def process_alert(alert):
             template_name, vendor = cg.generate_conpot(port,IP)
             honeypot_deploy(template_name, port, IP, vendor)
     elif re.search(r"generic UDP port scan detected", alert, re.I):
-        port = 44818
         for i in range(0, 3):
+            port = random.choice([502, 102,44818])
             IP = get_IP()
             template_name, vendor = cg.generate_conpot(port,IP, tcp = False)
             honeypot_deploy(template_name, port, IP, vendor)
