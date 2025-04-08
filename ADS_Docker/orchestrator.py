@@ -160,5 +160,7 @@ if __name__ == "__main__":
         start_base_conpot()
         print("Starting orchestrator...")
         start_server()
+    except KeyboardInterrupt:
+        print("Stopping orchestrator...")
     finally:
         cleanup()
