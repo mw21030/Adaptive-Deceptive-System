@@ -16,7 +16,6 @@ SERVER_CERT = '/home/mw/server.pem'
 SERVER_KEY = '/home/mw/server.key'
 CA_CERT = '/home/mw/ca.pem'
 deploy_conpot = {}
-stopDeploy = False
 
 def start_base_conpot():
     subprocess.Popen(f"sudo docker-compose up -d", shell=True,start_new_session=True, stdin=subprocess.DEVNULL)
@@ -45,21 +44,12 @@ def start_server():
                     conn, addr = ssock.accept()
                     data = conn.recv(4096)
                     if data:
-                        if stopDeploy:
-                            conn.close()
-                            break
-                        else:
-                            process_alert(data.decode())
-                            print(f"Received alert: {data.decode()}")
-                    try:
-                        # Graceful shutdown
-                        conn.shutdown(socket.SHUT_RDWR)
-                    except Exception as e:
-                        print("Shutdown error:", e)
-                    finally:
-                        conn.close()
+                        process_alert(data.decode())
+                        print(f"Received alert: {data.decode()}")
+                    conn.close()
                 except Exception as e:
                     print("Error:", e)
+                    continue
 
 def removeconpot(template_name):
     if template_name in deploy_conpot:
