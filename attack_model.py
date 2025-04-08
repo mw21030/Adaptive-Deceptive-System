@@ -157,7 +157,7 @@ if __name__ == "__main__":
     # send_s7comm_plc_command()
     # time.sleep(1)
     
-    send_s7comm_port_scan()
+    # send_s7comm_port_scan()
     # time.sleep(1)
     
     # send_enip_session_registration()
@@ -172,7 +172,7 @@ if __name__ == "__main__":
     # send_enip_write_tag_request()
     # time.sleep(1)
     
-    # send_enip_port_scan()
+    send_enip_port_scan()
     # time.sleep(1)
     
     # # Phase 3: High-Volume / Brute Force / DDoS

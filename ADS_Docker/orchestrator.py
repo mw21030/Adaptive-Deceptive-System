@@ -51,7 +51,13 @@ def start_server():
                         else:
                             process_alert(data.decode())
                             print(f"Received alert: {data.decode()}")
-                    conn.close()
+                    try:
+                        # Graceful shutdown
+                        conn.shutdown(socket.SHUT_RDWR)
+                    except Exception as e:
+                        print("Shutdown error:", e)
+                    finally:
+                        conn.close()
                 except Exception as e:
                     print("Error:", e)
 
