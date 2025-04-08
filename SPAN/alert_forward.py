@@ -55,6 +55,8 @@ def tail_alerts():
                     if current_time - last_time < 5:
                         last_sent[dedup_key] = current_time
                         continue
+                    elif source_ip == REMOTE_IP:
+                        continue
                     else:
                         last_sent[dedup_key] = current_time
                         try:

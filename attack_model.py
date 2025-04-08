@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import time
 from scapy.all import IP, TCP, UDP, Raw, send
+import os
+import datetime
 
 # ---------- Modbus Attack Simulation ----------
 
@@ -139,12 +141,10 @@ def send_bruteforce():
 
 if __name__ == "__main__":
     # Phase 1: Reconnaissance could be simulated with nmap or arp-scan externally.
-
+    now = datetime.datetime.now()
     # Phase 2: Exploitation
     print("=== Phase 2: Exploitation ===")
-    send_modbus_write(0x05)
-    time.sleep(1)
-    
+    # send_modbus_write(0x05)
     # send_modbus_illegal()
     # time.sleep(1)
     
@@ -157,7 +157,7 @@ if __name__ == "__main__":
     # send_s7comm_plc_command()
     # time.sleep(1)
     
-    # send_s7comm_port_scan()
+    send_s7comm_port_scan()
     # time.sleep(1)
     
     # send_enip_session_registration()
@@ -179,5 +179,7 @@ if __name__ == "__main__":
     # print("=== Phase 3: High-Volume / Brute Force / DDoS ===")
     # send_ddos()
     # time.sleep(1)
-    
     # send_bruteforce()
+
+    finish = datetime.datetime.now() - now
+    print(f"Time taken: {finish} seconds")
