@@ -51,7 +51,7 @@ def start_server():
                         else:
                             process_alert(data.decode())
                             print(f"Received alert: {data.decode()}")
-                            conn.close()
+                    conn.close()
                 except Exception as e:
                     print("Error:", e)
 

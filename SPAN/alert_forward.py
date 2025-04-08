@@ -60,6 +60,7 @@ def tail_alerts():
                     else:
                         last_sent[dedup_key] = current_time
                         try:
+                            print(f"Sending alert: {alert_text}")
                             with socket.create_connection((REMOTE_IP, REMOTE_PORT), timeout=5) as raw_sock:
                                 with context.wrap_socket(raw_sock, server_hostname=REMOTE_IP) as s:
                                     s.sendall(line.encode())
