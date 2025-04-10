@@ -69,7 +69,7 @@ def removeconpot(template_name):
     with deploy_lock:
         if template_name in deploy_conpot:
             IP, port, vendor = deploy_conpot[template_name]
-            docker.DockerClient().containers.get(template_name).stop(force=True)
+            docker.DockerClient().containers.get(template_name).remove(force=True)
             docker.DockerClient().images.get(template_name).remove(force=True)
             #subprocess.run(f"docker rm -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             subprocess.run(f"rm -r ./Honeypot/Templates/{template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
