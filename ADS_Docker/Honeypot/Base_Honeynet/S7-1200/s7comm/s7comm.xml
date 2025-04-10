@@ -14,7 +14,7 @@
             <!-- Not really sure what these are supposed to contain -->
             <module_identification id="W#16#0001">module</module_identification>
             <hardware_identification id="W#16#0006">hardware</hardware_identification>
-            <firmware_identification id="W#16#0006">firmware</firmware_identification>
+            <firmware_identification id="W#16#0007">firmware</firmware_identification>
         </ssl>
     </system_status_lists>
 </s7comm>
