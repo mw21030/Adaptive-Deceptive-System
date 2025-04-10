@@ -23,6 +23,9 @@ deploy_conpot = {}
 ip_lock = threading.Lock()
 deploy_lock = threading.Lock()
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+
 def start_base_conpot():
     subprocess.Popen("sudo docker-compose up -d", shell=True, start_new_session=True, stdin=subprocess.DEVNULL)
 
