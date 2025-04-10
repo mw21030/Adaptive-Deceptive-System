@@ -29,8 +29,9 @@ def cleanup():
     subprocess.run("sudo docker-compose down", shell=True, stdin=subprocess.DEVNULL)
     with deploy_lock:
         for deploy in list(deploy_conpot.keys()):
-            subprocess.run(f"docker rmi -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
+            subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
             subprocess.run(f"rm -r ./Honeypot/Templates/{deploy}", shell=True, stdin=subprocess.DEVNULL)
+            subprocess.run(f"docker rmi -f {deploy}:latest", shell=True, stdin=subprocess.DEVNULL)
     print("Cleanup completed.")
 
 def start_server():
