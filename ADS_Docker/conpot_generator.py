@@ -268,7 +268,7 @@ def generate_s7comm_xml(ip, port, profile_detail,template_name):
     # Serial number
     ET.SubElement(ssl, "serial", attrib={"id": "W#16#0005"}).text = "s7_id"
     # Module type name
-    ET.SubElement(ssl, "module_type_name", attrib={"id": "z#16#0007"}).text = "s7_module_type"
+    ET.SubElement(ssl, "module_type_name", attrib={"id": "W#16#0007"}).text = "s7_module_type"
     ET.SubElement(ssl, "oem_id", attrib={"id": "W#16#000A"}).text = "empty"
     # Location
     ET.SubElement(ssl, "location", attrib={"id": "W#16#000B"}).text = "empty"
