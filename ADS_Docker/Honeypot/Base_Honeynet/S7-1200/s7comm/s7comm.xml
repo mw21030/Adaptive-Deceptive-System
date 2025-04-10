@@ -6,7 +6,7 @@
             <plant_ident id="W#16#0003">FacilityName</plant_ident>
             <copyright id="W#16#0004">Copyright</copyright>
             <serial id="W#16#0005">s7_id</serial>
-            <module_type_name id="z#16#0007">s7_module_type</module_type_name>
+            <module_type_name id="W#16#0007">s7_module_type</module_type_name>
             <oem_id id="W#16#000A">empty</oem_id>
             <location id="W#16#000B">empty</location>
         </ssl>
