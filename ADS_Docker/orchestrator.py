@@ -23,7 +23,7 @@ deploy_conpot = {}
 ip_lock = threading.Lock()
 deploy_lock = threading.Lock()
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.info, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def start_base_conpot():
@@ -33,11 +33,9 @@ def cleanup():
     subprocess.run("sudo docker-compose down", shell=True, stdin=subprocess.DEVNULL)
     with deploy_lock:
         for deploy in list(deploy_conpot.keys()):
-            docker.DockerClient().containers.get(deploy).stop(force=True)
-            docker.DockerClient().images.get(deploy).remove(force=True)
-            #subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
+            subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
             subprocess.run(f"rm -r ./Honeypot/Templates/{deploy}", shell=True, stdin=subprocess.DEVNULL)
-            #subprocess.run(f"docker rmi -f {deploy}:latest", shell=True, stdin=subprocess.DEVNULL)
+            subprocess.run(f"docker rmi -f {deploy}:latest", shell=True, stdin=subprocess.DEVNULL)
     logging.info("Cleanup completed.")
 
 def start_server():
@@ -69,11 +67,9 @@ def removeconpot(template_name):
     with deploy_lock:
         if template_name in deploy_conpot:
             IP, port, vendor = deploy_conpot[template_name]
-            docker.DockerClient().containers.get(template_name).remove(force=True)
-            docker.DockerClient().images.get(template_name).remove(force=True)
-            #subprocess.run(f"docker rm -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(f"docker rm -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             subprocess.run(f"rm -r ./Honeypot/Templates/{template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            #subprocess.run(f"docker rmi -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(f"docker rmi -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             IP_addr = int(IP.split('.')[-1])
             with ip_lock:
                 if IP_addr in in_useIP:
@@ -108,10 +104,8 @@ def honeypot_deploy(template_name, port, IP, vendor):
     dir_path = os.getcwd()
     profiles_dir = os.path.join(dir_path, "Honeypot/Templates")
     template_path = os.path.join(profiles_dir, template_name)
-    docker.DockerClient().images.build(path=template_path, tag=template_name)
-    docker.DockerClient().containers.run(template_name, detach=True, name=template_name, network=f"my_honeynet:{IP}",ports={port: port})
-    #subprocess.run(f"docker build -t {template_name} {template_path}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    #subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(f"docker build -t {template_name} {template_path}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     logging.info(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
     with deploy_lock:
         deploy_conpot[template_name] = (IP, port, vendor)
