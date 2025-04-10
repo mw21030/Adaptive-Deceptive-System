@@ -280,7 +280,7 @@ def generate_s7comm_xml(ip, port, profile_detail,template_name):
     })
     ET.SubElement(ssl2, "module_identification", attrib={"id": "W#16#0001"}).text = "module"
     ET.SubElement(ssl2, "hardware_identification", attrib={"id": "W#16#0006"}).text = "hardware"
-    ET.SubElement(ssl2, "firmware_identification", attrib={"id": "W#16#0006"}).text = "firmware"
+    ET.SubElement(ssl2, "firmware_identification", attrib={"id": "W#16#0007"}).text = "firmware"
     
     return pretty_xml(root)
 
