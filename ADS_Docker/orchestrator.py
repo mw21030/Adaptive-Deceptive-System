@@ -31,7 +31,7 @@ def cleanup():
         for deploy in list(deploy_conpot.keys()):
             subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
             subprocess.run(f"rm -r ./Honeypot/Templates/{deploy}", shell=True, stdin=subprocess.DEVNULL)
-            subprocess.run(f"docker rmi {deploy}", shell=True, stdin=subprocess.DEVNULL)
+            subprocess.run(f"docker rmi {deploy}:latest", shell=True, stdin=subprocess.DEVNULL)
     print("Cleanup completed.")
 
 def start_server():
