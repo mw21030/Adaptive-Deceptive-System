@@ -31,6 +31,7 @@ def cleanup():
         for deploy in list(deploy_conpot.keys()):
             subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
             subprocess.run(f"rm -r ./Honeypot/Templates/{deploy}", shell=True, stdin=subprocess.DEVNULL)
+            subprocess.run(f"docker rmi {deploy}", shell=True, stdin=subprocess.DEVNULL)
     print("Cleanup completed.")
 
 def start_server():
@@ -63,6 +64,8 @@ def removeconpot(template_name):
         if template_name in deploy_conpot:
             IP, port, vendor = deploy_conpot[template_name]
             subprocess.run(f"docker rm -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(f"rm -r ./Honeypot/Templates/{template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(f"docker rmi {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             IP_addr = int(IP.split('.')[-1])
             with ip_lock:
                 if IP_addr in in_useIP:
