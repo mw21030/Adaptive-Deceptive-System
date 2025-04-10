@@ -2,7 +2,6 @@ import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
 import random
 import os
-import random
 from vendor import PRODUCTS_DATA
 
 used_details = {}

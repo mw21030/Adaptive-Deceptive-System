@@ -10,6 +10,7 @@ import os
 import logging
 import threading
 import concurrent.futures
+import logging
 
 HOST = '192.168.220.128'
 in_useIP = [129, 1, 128, 35, 22, 7, 13]  
@@ -22,6 +23,9 @@ deploy_conpot = {}
 ip_lock = threading.Lock()
 deploy_lock = threading.Lock()
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+
 def start_base_conpot():
     subprocess.Popen("sudo docker-compose up -d", shell=True, start_new_session=True, stdin=subprocess.DEVNULL)
 
@@ -29,10 +33,12 @@ def cleanup():
     subprocess.run("sudo docker-compose down", shell=True, stdin=subprocess.DEVNULL)
     with deploy_lock:
         for deploy in list(deploy_conpot.keys()):
-            subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
+            docker.DockerClient().containers.get(deploy).stop(force=True)
+            docker.DockerClient().images.get(deploy).remove(force=True)
+            #subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
             subprocess.run(f"rm -r ./Honeypot/Templates/{deploy}", shell=True, stdin=subprocess.DEVNULL)
-            subprocess.run(f"docker rmi -f {deploy}:latest", shell=True, stdin=subprocess.DEVNULL)
-    print("Cleanup completed.")
+            #subprocess.run(f"docker rmi -f {deploy}:latest", shell=True, stdin=subprocess.DEVNULL)
+    logging.info("Cleanup completed.")
 
 def start_server():
     context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
@@ -44,7 +50,7 @@ def start_server():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0) as sock:
         sock.bind((HOST, PORT))
         sock.listen(5)
-        print(f"Server listening on {HOST}:{PORT}")
+        logging.info(f"Server listening on {HOST}:{PORT}")
 
         with context.wrap_socket(sock, server_side=True) as ssock:
             while True:
@@ -53,27 +59,29 @@ def start_server():
                     data = conn.recv(4096)
                     if data:
                         alert = data.decode()
-                        print(f"Received alert: {alert}")
+                        logging.info(f"Received alert: {alert}")
                         process_alert(alert)
                     conn.close()
                 except Exception as e:
-                    print("Error: %s", e)
+                    logging.error("Error: %s", e)
 
 def removeconpot(template_name):
     with deploy_lock:
         if template_name in deploy_conpot:
             IP, port, vendor = deploy_conpot[template_name]
-            subprocess.run(f"docker rm -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            docker.DockerClient().containers.get(template_name).stop(force=True)
+            docker.DockerClient().images.get(template_name).remove(force=True)
+            #subprocess.run(f"docker rm -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             subprocess.run(f"rm -r ./Honeypot/Templates/{template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            subprocess.run(f"docker rmi {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            #subprocess.run(f"docker rmi -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             IP_addr = int(IP.split('.')[-1])
             with ip_lock:
                 if IP_addr in in_useIP:
                     in_useIP.remove(IP_addr)
-            print(f"Removed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
+            logging.info(f"Removed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
             del deploy_conpot[template_name]
         else:
-            print(f"No conpot instance found with name: {template_name}")
+            logging.error(f"No conpot instance found with name: {template_name}")
 
 def get_IP():
     with ip_lock:
@@ -100,9 +108,11 @@ def honeypot_deploy(template_name, port, IP, vendor):
     dir_path = os.getcwd()
     profiles_dir = os.path.join(dir_path, "Honeypot/Templates")
     template_path = os.path.join(profiles_dir, template_name)
-    subprocess.run(f"docker build -t {template_name} {template_path}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    print(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
+    docker.DockerClient().images.build(path=template_path, tag=template_name)
+    docker.DockerClient().containers.run(template_name, detach=True, name=template_name, network="my_honeynet", ip=IP, ports={port: port})
+    #subprocess.run(f"docker build -t {template_name} {template_path}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    #subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    logging.info(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
     with deploy_lock:
         deploy_conpot[template_name] = (IP, port, vendor)
 
@@ -115,7 +125,7 @@ def deploy_instance_for_alert(port, tcp=None):
             template_name, vendor = cg.generate_conpot(port, IP, tcp=tcp)
         honeypot_deploy(template_name, port, IP, vendor)
     except Exception as e:
-        print(f"Error deploying instance for port {port}: {e}")
+        logging.error(f"Error deploying instance for port {port}: {e}")
 
 def process_alert(alert):
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
@@ -159,11 +169,11 @@ def process_alert(alert):
 
 if __name__ == "__main__":
     try:
-        print("Starting conpot instances...")
+        logging.info("Starting conpot instances...")
         start_base_conpot()
-        print("Starting orchestrator...")
+        logging.info("Starting orchestrator...")
         start_server()
     except KeyboardInterrupt:
-        print("Stopping orchestrator...")
+        logging.info("Stopping orchestrator...")
     finally:
         cleanup()
