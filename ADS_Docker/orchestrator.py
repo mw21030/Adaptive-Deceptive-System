@@ -23,7 +23,7 @@ deploy_conpot = {}
 ip_lock = threading.Lock()
 deploy_lock = threading.Lock()
 
-logging.basicConfig(level=logging.info, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def start_base_conpot():
@@ -124,38 +124,38 @@ def deploy_instance_for_alert(port, tcp=None):
 def process_alert(alert):
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
         deploying = []
-        if re.search(r"write operation attempt detected", alert, re.I):
+        if re.search(r"command spoofing detected", alert, re.I):
             port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+write operation attempt detected", alert, re.I).group(1)
             port = port_number(port_name)
             deploying = [executor.submit(deploy_instance_for_alert, port) for _ in range(3)]
-        elif re.search(r"illegal control command detected", alert, re.I):
-            port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+illegal control command detected", alert, re.I).group(1)
-            port = port_number(port_name)
-            deploying = [executor.submit(deploy_instance_for_alert, port) for _ in range(3)]
-        elif re.search(r"port scan attempt detected", alert, re.I) and not re.search(r"continuous", alert, re.I):
+        elif re.search(r"fingerprinting detected", alert, re.I) and not re.search(r"continuous", alert, re.I):
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
                 deploying.append(executor.submit(deploy_instance_for_alert, port))
-        elif re.search(r"continuous port scan detected", alert, re.I):
+        elif re.search(r"port scan detected", alert, re.I):
             port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+continuous port scan detected", alert, re.I).group(1)
             port = port_number(port_name)
             deploying = [executor.submit(deploy_instance_for_alert, port) for _ in range(3)]
-        elif re.search(r"generic UDP port scan detected", alert, re.I):
+        elif re.search(r"snmp enumeration detected", alert, re.I):
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
                 deploying.append(executor.submit(deploy_instance_for_alert, port, tcp=False))
-        elif re.search(r"generic TCP port scan detected", alert, re.I):
+        elif re.search(r"banner grabbing", alert, re.I):
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
                 deploying.append(executor.submit(deploy_instance_for_alert, port, tcp=True))
-        elif re.search(r"potential volumetric attack detected", alert, re.I) or re.search(r"repeated connection attempts detected", alert, re.I):
+        elif re.search(r"repeated connection attempts detected", alert, re.I) or re.search(r"repeated connection attempts detected", alert, re.I):
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
                 deploying.append(executor.submit(deploy_instance_for_alert, port))
-        elif re.search(r"suspicious ENIP packet length detected", alert, re.I):
+        elif re.search(r"flood detected", alert, re.I):
             port = 44818
             deploying = [executor.submit(deploy_instance_for_alert, port) for _ in range(3)]
-        elif re.search(r"minimal packet fingerprinting attempt detected", alert, re.I):
+        elif re.search(r"potential volumetric attack detected", alert, re.I):
+            for _ in range(3):
+                port = random.choice([502, 102, 44818])
+                deploying.append(executor.submit(deploy_instance_for_alert, port))
+        elif re.search(r"icmp ping", alert, re.I):
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
                 deploying.append(executor.submit(deploy_instance_for_alert, port))
