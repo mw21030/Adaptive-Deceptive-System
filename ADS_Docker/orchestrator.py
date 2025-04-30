@@ -159,17 +159,9 @@ def deploy_instance_for_alert(port, tcp=None, reconfigure = False, rotate=False,
 def process_alert(alert):
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
         deploying = []
-        alert_info = re.compile(
-                        r"\[(\w+)\]\s"                       # [tag]
-                        r"([A-Za-z0-9 _/.\-:]+)\s"           # message
-                        r"\[[^\]]+\].*"                      # next [...]
-                        r"\{.*?\}\s"                         # {proto}
-                        r"([\d.]+(?::\d+)?)\s->\s"           # src IP[:port]
-                        r"([\d.]+(?::\d+)?)"                 # dst IP[:port]
-                    )
-
-        alert_info = alert_info.search(alert)
+        alert_info = re.search(r"\[(\w+)\]\s([A-Za-z0-9 _/.\-:]+)\s\[[^\]]+\].*\{.*?\}\s([\d.]+)\s->\s([\d.]+)", alert)
         if not alert_info:
+            logging.warning("Unparsable alert: %s", alert)
             return        
         if alert_info.group(1) == 'scan' or alert_info.group(1) == 'icmp':
             for _ in range(3):
