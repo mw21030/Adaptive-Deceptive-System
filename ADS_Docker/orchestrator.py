@@ -1,4 +1,3 @@
-import docker
 import time
 import socket
 import ssl
@@ -11,6 +10,7 @@ import logging
 import threading
 import concurrent.futures
 import logging
+from threading import Timer
 
 HOST = '192.168.220.128'
 in_useIP = [129, 1, 128, 35, 22, 7, 13]  
@@ -38,6 +38,15 @@ def cleanup():
             subprocess.run(f"docker rmi -f {deploy}:latest", shell=True, stdin=subprocess.DEVNULL)
     logging.info("Cleanup completed.")
 
+def reconfigure_conpot(template_name,  alter_IP = False):
+    with deploy_lock:
+        IP, port, vendor, profile_info = deploy_conpot[template_name]
+        removeconpot(template_name)
+        if alter_IP:
+            IP = get_IP()
+        template_name, vendor, profile_info = cg.reconfiguration(IP, port , profile_info)
+        honeypot_deploy(template_name, port, IP, vendor, profile_info)
+
 def start_server():
     context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     context.load_cert_chain(certfile=SERVER_CERT, keyfile=SERVER_KEY)
@@ -63,10 +72,18 @@ def start_server():
                 except Exception as e:
                     logging.error("Error: %s", e)
 
+def rotate_conpot(template_name):
+    with deploy_lock:
+        IP, port, _, _ = deploy_conpot[template_name]
+        removeconpot(template_name)
+        IP = get_IP()
+        cg.generate_conpot(port, IP)
+
+
 def removeconpot(template_name):
     with deploy_lock:
         if template_name in deploy_conpot:
-            IP, port, vendor = deploy_conpot[template_name]
+            IP, port, vendor, profile_info = deploy_conpot[template_name]
             subprocess.run(f"docker rm -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             subprocess.run(f"rm -r ./Honeypot/Templates/{template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             subprocess.run(f"docker rmi -f {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -78,6 +95,7 @@ def removeconpot(template_name):
             del deploy_conpot[template_name]
         else:
             logging.error(f"No conpot instance found with name: {template_name}")
+
 
 def get_IP():
     with ip_lock:
@@ -100,7 +118,7 @@ def port_number(protocol):
     elif protocol == "enip":
         return 44818
 
-def honeypot_deploy(template_name, port, IP, vendor):
+def honeypot_deploy(template_name, port, IP, vendor, profile_info):
     dir_path = os.getcwd()
     profiles_dir = os.path.join(dir_path, "Honeypot/Templates")
     template_path = os.path.join(profiles_dir, template_name)
@@ -108,58 +126,113 @@ def honeypot_deploy(template_name, port, IP, vendor):
     subprocess.Popen(f"docker run -d --name {template_name} --net my_honeynet --ip {IP} {template_name}", shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     logging.info(f"Deployed conpot instance with name: {template_name} with IP: {IP} in port: {port}")
     with deploy_lock:
-        deploy_conpot[template_name] = (IP, port, vendor)
+        deploy_conpot[template_name] = (IP, port, vendor, profile_info)
 
-def deploy_instance_for_alert(port, tcp=None):
+def deploy_instance_for_alert(port, tcp=None, reconfigure = False, rotate=False, rotate_time =0):
     try:
         IP = get_IP()
         if tcp is None:
-            template_name, vendor = cg.generate_conpot(port, IP)
+            template_name, vendor, profile_info = cg.generate_conpot(port, IP)
         else:
-            template_name, vendor = cg.generate_conpot(port, IP, tcp=tcp)
-        honeypot_deploy(template_name, port, IP, vendor)
+            template_name, vendor, profile_info = cg.generate_conpot(port, IP, tcp=tcp)
+        honeypot_deploy(template_name, port, IP, vendor, profile_info)
+        if rotate:
+            rotate_sec = rotate_time * 60
+            Timer(rotate_sec, rotate_conpot, args=(template_name,)).start()
     except Exception as e:
         logging.error(f"Error deploying instance for port {port}: {e}")
+
+
 
 def process_alert(alert):
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
         deploying = []
-        if re.search(r"command spoofing detected", alert, re.I):
-            port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+write operation attempt detected", alert, re.I).group(1)
-            port = port_number(port_name)
-            deploying = [executor.submit(deploy_instance_for_alert, port) for _ in range(3)]
-        elif re.search(r"fingerprinting detected", alert, re.I) and not re.search(r"continuous", alert, re.I):
+        alert_info = re.search(r"\[(\w+)\]\s([a-zA-Z0-9\s\-_/.:]+)\s\[\w+\].*\{.*?\}\s([\d.]+)\s->\s([\d.]+)", alert)
+        if alert_info.group(1) == 'nmap' or alert_info.group(1) == 'icmp':
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
                 deploying.append(executor.submit(deploy_instance_for_alert, port))
-        elif re.search(r"port scan detected", alert, re.I):
-            port_name = re.search(r"\[([a-zA-Z0-9]+)\]\s+continuous port scan detected", alert, re.I).group(1)
-            port = port_number(port_name)
-            deploying = [executor.submit(deploy_instance_for_alert, port) for _ in range(3)]
-        elif re.search(r"snmp enumeration detected", alert, re.I):
+        # elif alert_info.group(2) == 'banner grabbing':
+        #     for _ in range(3):
+        #         port = random.choice([502, 102, 44818])
+        #         deploying.append(executor.submit(deploy_instance_for_alert, port))
+        # elif alert_info.group(2) == 'snmp enumeration detected':
+        #     for _ in range(3):
+        #         port = random.choice([502, 102, 44818])
+        #         deploying.append(executor.submit(deploy_instance_for_alert, port))
+        elif alert_info.group(2) == "fingerprinting detected":
+            port = port_number(alert_info.group(1))
             for _ in range(3):
-                port = random.choice([502, 102, 44818])
-                deploying.append(executor.submit(deploy_instance_for_alert, port, tcp=False))
-        elif re.search(r"banner grabbing", alert, re.I):
+                rotate_time = random.randint(5, 10)
+                deploying.append(executor.submit(deploy_instance_for_alert, port, rotate=True, rotate_time=rotate_time))
+        elif alert_info.group(2) == "port scan detected":
+            port = port_number(alert_info.group(1))
             for _ in range(3):
-                port = random.choice([502, 102, 44818])
-                deploying.append(executor.submit(deploy_instance_for_alert, port, tcp=True))
-        elif re.search(r"repeated connection attempts detected", alert, re.I) or re.search(r"repeated connection attempts detected", alert, re.I):
-            for _ in range(3):
-                port = random.choice([502, 102, 44818])
-                deploying.append(executor.submit(deploy_instance_for_alert, port))
-        elif re.search(r"flood detected", alert, re.I):
-            port = 44818
-            deploying = [executor.submit(deploy_instance_for_alert, port) for _ in range(3)]
-        elif re.search(r"potential volumetric attack detected", alert, re.I):
-            for _ in range(3):
-                port = random.choice([502, 102, 44818])
-                deploying.append(executor.submit(deploy_instance_for_alert, port))
-        elif re.search(r"icmp ping", alert, re.I):
+                deploying.append(executor.submit(deploy_instance_for_alert, port, rotate=True))
+        elif alert_info.group(2) == "command spoofing detected":
+            target = alert_info.group(4)
+            matching_templates = [name for name, (ip, port, vendor, profile_info) in deploy_conpot.items() if ip == target]
+            if matching_templates:
+                template_name = matching_templates[0]
+                reconfigure_conpot(template_name,reconfigure=True)
+        elif alert_info.group(2) == "repeated connection attempts detected":
+            port = port_number(alert_info.group(1))
+            deploying.append(executor.submit(deploy_instance_for_alert, port,rotate = True) for _ in range(3))
+            target = alert_info.group(4)
+            matching_templates = [name for name, (ip, port, vendor, profile_info) in deploy_conpot.items() if ip == target]
+            if matching_templates:
+                template_name = matching_templates[0]
+                reconfigure_conpot(template_name, reconfigure = True)
+        elif alert_info.group(2) == "flood detected":
+            target = alert_info.group(4)
+            matching_templates = [name for name, (ip, port, vendor, profile_info) in deploy_conpot.items() if ip == target]
+            if matching_templates:
+                template_name = matching_templates[0]
+                reconfigure_conpot(template_name,alter_IP=True)
+        elif alert_info.group(2) == "potential volumetric attack detected":
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
                 deploying.append(executor.submit(deploy_instance_for_alert, port))
         concurrent.futures.wait(deploying)
+
+def rotate_randam_conpot():
+    number_rotate = random.randint(1,10)
+    if number_rotate > len(deploy_conpot):
+        number_rotate = len(deploy_conpot)
+    for _ in range(number_rotate):
+        with deploy_lock:
+            if deploy_conpot:
+                template_name = random.choice(list(deploy_conpot.keys()))
+                IP, port, vendor, profile_info = deploy_conpot[template_name]
+                removeconpot(template_name)
+                IP = get_IP()
+                template_name, vendor, profile_info = cg.generate_conpot(port, IP)
+                honeypot_deploy(template_name, port, IP, vendor, profile_info)
+
+
+def rotate():
+    rotate_mins = random.randint(45, 60)
+    threading.Timer(rotate_mins*60, rotate_randam_conpot).start()
+    threading.Timer(rotate_mins*60, rotate).start()
+
+
+def random_reconfigure():
+    number_reconfigure = random.randint(5, 10)
+    if number_reconfigure > len(deploy_conpot):
+        number_reconfigure = len(deploy_conpot)
+    for _ in range(number_reconfigure):
+        with deploy_lock:
+            if deploy_conpot:
+                template_name = random.choice(list(deploy_conpot.keys()))
+                reconfigure_conpot(template_name)
+
+def random_reconfig():
+    reconfigure_mins = random.randint(5,20)
+    threading.Timer(reconfigure_mins*60, random_reconfigure).start()
+    threading.Timer(reconfigure_mins*60, random_reconfig).start()
+
+rotate()
+random_reconfig()
 
 if __name__ == "__main__":
     try:

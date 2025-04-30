@@ -138,7 +138,7 @@ def pretty_xml(element):
     reparsed = minidom.parseString(rough_string)
     return reparsed.toprettyxml(indent="  ")
 
-def generate_enip_xml(ip, port, profile_detail, tcp = any):
+def generate_enip_xml(ip, port, profile_detail, tcp = None):
     root = ET.Element("enip", attrib={"enabled": "True", "host": ip, "port": str(port)})
     
     # Device information
@@ -392,10 +392,8 @@ def generate_modbus_xml(ip, port, profile_detail, template_name):
             }    
     return pretty_xml(root)
 
-def generate_conpot(port, ip, tcp = any):
-    port_name = port_convert(port)
-    template_name = f"{port_name}_{ip}"
-    profile_detail= get_random_vendor_data(port)
+
+def build_conpot(ip, port, profile_detail, template_name, tcp = None):
     vendor = profile_detail["Vendor"]
     template_xml = template_generator(ip, port, profile_detail,template_name)
     dockerfile_content = dockerfile_generator(port, template_name)
@@ -427,7 +425,22 @@ def generate_conpot(port, ip, tcp = any):
     with open(xml_file_path, "w") as f:
         f.write(xml_data)
     
-    return template_name,vendor
+    return template_name,vendor, profile_detail
+
+
+
+def reconfiguration(ip, port, profile_detail):
+    port_name = port_convert(port)
+    template_name = f"{port_name}_{ip}"
+    profile_detail= profile_detail
+    return build_conpot(ip, port, profile_detail, template_name)
+
+
+def generate_conpot(port, ip, tcp = None):
+    port_name = port_convert(port)
+    template_name = f"{port_name}_{ip}"
+    profile_detail= get_random_vendor_data(port)
+    return  build_conpot(ip, port, profile_detail, template_name, tcp)
 
 if __name__ == "__main__":
     generate_conpot(102,"192.168.220.0")

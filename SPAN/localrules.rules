@@ -1,6 +1,11 @@
 # ICMP ping (host discovery)
 alert icmp any any -> $HOME_NET any (msg:"[icmp] icmp ping"; itype:8; sid:1000001; rev:1;)
 
+#Nmap Scanning
+alert tcp any any -> any any (msg:"[NMAP] TCP Scan Detected"; flags:S; threshold:type threshold, track by_src, count 5, seconds 3; sid:1000001; rev:1;)
+alert udp any any -> any any (msg:"[NMAP] UDP Scan Detected"; threshold:type threshold, track by_src, count 10, seconds 5; sid:1000002; rev:1;)
+
+
 # HTTP banner grabbing (GET request)
 alert tcp any any -> $HOME_NET 80 (msg:"[http] banner grabbing"; flow:to_server,established; content:"GET / HTTP/1."; offset:0; depth:14; content:"Host:"; within:32; detection_filter:track by_src, count 1, seconds 5; sid:1000006; rev:1;)
 
