@@ -11,6 +11,14 @@ import threading
 import concurrent.futures
 import logging
 from threading import Timer
+from collections import defaultdict
+
+ALERT_CACHE      = defaultdict(float)   
+ALERT_CACHE_LOCK = threading.Lock()
+DEDUP_WINDOW     = 5.0
+TIMER_REGISTRY = []
+stop_event     = threading.Event()
+
 
 HOST = '192.168.220.128'
 in_useIP = [129, 1, 128, 35, 22, 7, 13]  
@@ -30,6 +38,11 @@ def start_base_conpot():
     subprocess.Popen("sudo docker-compose up -d", shell=True, start_new_session=True, stdin=subprocess.DEVNULL)
 
 def cleanup():
+    stop_event.set()          
+    for t in TIMER_REGISTRY:
+        t.cancel()            
+    logging.info("All timers cancelled.")
+
     subprocess.run("sudo docker-compose down", shell=True, stdin=subprocess.DEVNULL)
     with deploy_lock:
         for deploy in list(deploy_conpot.keys()):
@@ -154,6 +167,11 @@ def process_alert(alert):
         if not alert_info:
             logging.warning("Unparsable alert: %s", alert)
             return        
+        
+        tag, msg, src_ip, dst_ip = alert_info.groups()
+        if not should_process(tag, msg, src_ip, dst_ip):
+            logging.info("Dedup-drop <%s %s %s→%s>", tag, msg, src_ip, dst_ip)
+            return
         if alert_info.group(1) == 'scan' or alert_info.group(1) == 'icmp':
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
@@ -202,6 +220,18 @@ def process_alert(alert):
                 deploying.append(executor.submit(deploy_instance_for_alert, port))
         concurrent.futures.wait(deploying)
 
+def should_process(tag, msg, src, dst):
+    key = (tag, msg, src, dst)
+    now = time.time()
+    with ALERT_CACHE_LOCK:
+        last = ALERT_CACHE[key]
+        if now - last < DEDUP_WINDOW:
+            return False        
+        ALERT_CACHE[key] = now   
+    return True
+
+
+
 def rotate_randam_conpot():
     number_rotate = random.randint(1,10)
     if number_rotate > len(deploy_conpot):
@@ -217,12 +247,6 @@ def rotate_randam_conpot():
                 honeypot_deploy(template_name, port, IP, vendor, profile_info)
 
 
-def rotate():
-    rotate_mins = random.randint(45, 60)
-    threading.Timer(rotate_mins*60, rotate_randam_conpot).start()
-    threading.Timer(rotate_mins*60, rotate).start()
-
-
 def random_reconfigure():
     number_reconfigure = random.randint(5, 10)
     if number_reconfigure > len(deploy_conpot):
@@ -233,10 +257,27 @@ def random_reconfigure():
                 template_name = random.choice(list(deploy_conpot.keys()))
                 reconfigure_conpot(template_name)
 
+
+def _start_timer(seconds, func, *args):
+    t = threading.Timer(seconds, func, args=args)
+    t.daemon = True          # extra safety
+    t.start()
+    TIMER_REGISTRY.append(t)
+    return t
+
+def rotate():
+    if stop_event.is_set():      # do not reschedule after Ctrl-C
+        return
+    mins = random.randint(45, 60)
+    _start_timer(mins*60, rotate_randam_conpot)
+    _start_timer(mins*60, rotate)
+
 def random_reconfig():
-    reconfigure_mins = random.randint(5,20)
-    threading.Timer(reconfigure_mins*60, random_reconfigure).start()
-    threading.Timer(reconfigure_mins*60, random_reconfig).start()
+    if stop_event.is_set():
+        return
+    mins = random.randint(5, 20)
+    _start_timer(mins*60, random_reconfigure)
+    _start_timer(mins*60, random_reconfig)
 
 rotate()
 random_reconfig()
