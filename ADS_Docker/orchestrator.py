@@ -148,7 +148,7 @@ def process_alert(alert):
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
         deploying = []
         alert_info = re.search(r"\[(\w+)\]\s([a-zA-Z0-9\s\-_/.:]+)\s\[\w+\].*\{.*?\}\s([\d.]+)\s->\s([\d.]+)", alert)
-        if alert_info.group(1) == 'nmap' or alert_info.group(1) == 'icmp':
+        if alert_info.group(1) == 'scan' or alert_info.group(1) == 'icmp':
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
                 deploying.append(executor.submit(deploy_instance_for_alert, port))
