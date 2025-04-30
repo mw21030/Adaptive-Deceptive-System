@@ -38,14 +38,17 @@ def cleanup():
             subprocess.run(f"docker rmi -f {deploy}:latest", shell=True, stdin=subprocess.DEVNULL)
     logging.info("Cleanup completed.")
 
-def reconfigure_conpot(template_name,  alter_IP = False):
+def reconfigure_conpot(template_name, alter_IP=False):
     with deploy_lock:
-        IP, port, vendor, profile_info = deploy_conpot[template_name]
-        removeconpot(template_name)
+        IP, port, vendor, profile = deploy_conpot[template_name]
+    try:
         if alter_IP:
             IP = get_IP()
-        template_name, vendor, profile_info = cg.reconfiguration(IP, port , profile_info)
-        honeypot_deploy(template_name, port, IP, vendor, profile_info)
+        new_name, new_vendor, new_profile = cg.reconfiguration(IP, port, profile)
+        honeypot_deploy(new_name, port, IP, new_vendor, new_profile)
+        removeconpot(template_name)           # only delete after success
+    except Exception as e:
+        logging.error("Reconfig failed: %s", e)
 
 def start_server():
     context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
@@ -77,8 +80,8 @@ def rotate_conpot(template_name):
         IP, port, _, _ = deploy_conpot[template_name]
         removeconpot(template_name)
         IP = get_IP()
-        cg.generate_conpot(port, IP)
-
+        new_name, new_vendor, new_profile = cg.generate_conpot(port, IP)
+        honeypot_deploy(new_name, port, IP, new_vendor, new_profile)
 
 def removeconpot(template_name):
     with deploy_lock:
@@ -147,7 +150,10 @@ def deploy_instance_for_alert(port, tcp=None, reconfigure = False, rotate=False,
 def process_alert(alert):
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
         deploying = []
-        alert_info = re.search(r"\[(\w+)\]\s([a-zA-Z0-9\s\-_/.:]+)\s\[\w+\].*\{.*?\}\s([\d.]+)\s->\s([\d.]+)", alert)
+        alert_info = re.search(r"\[(\w+)\]\s([A-Za-z0-9 _/.\-:]+)\s\[\w+\].*\{.*?\}\s([\d.]+)\s->\s([\d.]+)", alert)
+        if not alert_info:
+            logging.warning("Unparsable alert: %s", alert)
+            return        
         if alert_info.group(1) == 'scan' or alert_info.group(1) == 'icmp':
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
@@ -177,7 +183,8 @@ def process_alert(alert):
                 reconfigure_conpot(template_name,reconfigure=True)
         elif alert_info.group(2) == "repeated connection attempts detected":
             port = port_number(alert_info.group(1))
-            deploying.append(executor.submit(deploy_instance_for_alert, port,rotate = True) for _ in range(3))
+            for _ in range(3):
+                deploying.append(executor.submit(deploy_instance_for_alert, port, rotate=True))
             target = alert_info.group(4)
             matching_templates = [name for name, (ip, port, vendor, profile_info) in deploy_conpot.items() if ip == target]
             if matching_templates:
