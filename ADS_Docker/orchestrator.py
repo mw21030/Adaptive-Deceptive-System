@@ -11,6 +11,18 @@ import threading
 import concurrent.futures
 import logging
 from threading import Timer
+from collections import defaultdict
+
+
+
+
+
+ALERT_CACHE      = defaultdict(float)   
+ALERT_CACHE_LOCK = threading.Lock()
+DEDUP_WINDOW     = 5.0                    
+
+
+
 
 HOST = '192.168.220.128'
 in_useIP = [129, 1, 128, 35, 22, 7, 13]  
@@ -154,6 +166,11 @@ def process_alert(alert):
         if not alert_info:
             logging.warning("Unparsable alert: %s", alert)
             return        
+        
+        tag, msg, src_ip, dst_ip = alert_info.groups()
+        if not should_process(tag, msg, src_ip, dst_ip):
+            logging.info("Dedup-drop <%s %s %s→%s>", tag, msg, src_ip, dst_ip)
+            return
         if alert_info.group(1) == 'scan' or alert_info.group(1) == 'icmp':
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
@@ -201,6 +218,18 @@ def process_alert(alert):
                 port = random.choice([502, 102, 44818])
                 deploying.append(executor.submit(deploy_instance_for_alert, port))
         concurrent.futures.wait(deploying)
+
+def should_process(tag, msg, src, dst):
+    key = (tag, msg, src, dst)
+    now = time.time()
+    with ALERT_CACHE_LOCK:
+        last = ALERT_CACHE[key]
+        if now - last < DEDUP_WINDOW:
+            return False        
+        ALERT_CACHE[key] = now   
+    return True
+
+
 
 def rotate_randam_conpot():
     number_rotate = random.randint(1,10)
