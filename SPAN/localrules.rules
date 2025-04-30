@@ -55,7 +55,8 @@ alert tcp any any -> $HOME_NET 44818 (msg:"[enip] command spoofing detected"; pc
 alert udp any any -> $HOME_NET 2222 (msg:"[enip] command spoofing detected"; content:"|70 00|"; offset:0; depth:2; detection_filter:track by_src, count 1, seconds 1; sid:3000021; rev:2;)
 
 # TCP repeated connection attempts
-alert tcp any any -> $HOME_NET any (msg:"[bruteforce] repeated connection attempts detected"; flags:S; detection_filter:track by_src, count 10, seconds 10; sid:1000009; rev:1;)
+alert tcp any any -> $HOME_NET any (msg:"[bruteforce] repeated connection attempts detected"; \
+    flags:S; threshold:type threshold, track by_src, count 10, seconds 60; sid:4000002; rev:1;)
 
 # Modbus flood
 alert tcp any any -> $HOME_NET 502 (msg:"[modbus] flood detected"; flow:to_server; detection_filter:track by_src, count 100, seconds 5; sid:3000004; rev:1;)
