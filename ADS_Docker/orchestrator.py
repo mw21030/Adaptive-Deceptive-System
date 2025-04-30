@@ -150,7 +150,7 @@ def deploy_instance_for_alert(port, tcp=None, reconfigure = False, rotate=False,
 def process_alert(alert):
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
         deploying = []
-        alert_info = re.search(r"\[(\w+)\]\s([A-Za-z0-9 _/.\-:]+)\s\[\w+\].*\{.*?\}\s([\d.]+)\s->\s([\d.]+)", alert)
+        alert_info = re.search(r"\[(\w+)\]\s([A-Za-z0-9 _/.\-:]+)\s\[[^\]]+\].*\{.*?\}\s([\d.]+)\s->\s([\d.]+)", alert)
         if not alert_info:
             logging.warning("Unparsable alert: %s", alert)
             return        
