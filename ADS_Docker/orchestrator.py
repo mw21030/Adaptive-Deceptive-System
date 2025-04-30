@@ -11,6 +11,14 @@ import threading
 import concurrent.futures
 import logging
 from threading import Timer
+from collections import defaultdict
+
+
+ALERT_CACHE      = defaultdict(float)    
+ALERT_CACHE_LOCK = threading.Lock()
+DEDUP_WINDOW     = 5.0                  
+
+
 
 TIMER_REGISTRY = []
 stop_event     = threading.Event()
@@ -159,10 +167,21 @@ def deploy_instance_for_alert(port, tcp=None, reconfigure = False, rotate=False,
 def process_alert(alert):
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
         deploying = []
-        alert_info = re.search(r"\[(\w+)\]\s([A-Za-z0-9 _/.\-:]+)\s\[[^\]]+\].*\{.*?\}\s([\d.]+)\s->\s([\d.]+)", alert)
+        alert_info = re.compile(
+                    r"\[(\w+)\]\s"                       
+                    r"([A-Za-z0-9 _/.\-:]+)\s"       
+                    r"\[[^\]]+\].*"                      
+                    r"\{.*?\}\s"                         
+                    r"([\d.]+)(?:\:\d+)?\s->\s"          
+                    r"([\d.]+)(?:\:\d+)?"                
+                )
+        alert_info = alert_info.search(alert)
         if not alert_info:
-            logging.warning("Unparsable alert: %s", alert)
             return        
+        tag, msg, src_ip, dst_ip = alert_info.groups()
+        if not should_process(tag, msg, src_ip, dst_ip):
+            logging.info("Dedup-drop <%s %s %s→%s>", tag, msg, src_ip, dst_ip)
+            return
         if alert_info.group(1) == 'scan' or alert_info.group(1) == 'icmp':
             for _ in range(3):
                 port = random.choice([502, 102, 44818])
@@ -191,14 +210,15 @@ def process_alert(alert):
                 template_name = matching_templates[0]
                 reconfigure_conpot(template_name,reconfigure=True)
         elif alert_info.group(2) == "repeated connection attempts detected":
-            port = port_number(alert_info.group(1))
-            for _ in range(3):
-                deploying.append(executor.submit(deploy_instance_for_alert, port, rotate=True))
             target = alert_info.group(4)
             matching_templates = [name for name, (ip, port, vendor, profile_info) in deploy_conpot.items() if ip == target]
-            if matching_templates:
+            if matching_templates: 
                 template_name = matching_templates[0]
-                reconfigure_conpot(template_name, reconfigure = True)
+                with deploy_lock:
+                    _, port, _, _ = deploy_conpot[template_name]
+                for _ in range(3):
+                    deploying.append(executor.submit(deploy_instance_for_alert, port, rotate=True))
+                reconfigure_conpot(template_name, reconfigure=True)
         elif alert_info.group(2) == "flood detected":
             target = alert_info.group(4)
             matching_templates = [name for name, (ip, port, vendor, profile_info) in deploy_conpot.items() if ip == target]
@@ -210,6 +230,16 @@ def process_alert(alert):
                 port = random.choice([502, 102, 44818])
                 deploying.append(executor.submit(deploy_instance_for_alert, port))
         concurrent.futures.wait(deploying)
+
+def should_process(tag, msg, src, dst):
+    key = (tag, msg, src, dst)
+    now = time.time()
+    with ALERT_CACHE_LOCK:
+        last = ALERT_CACHE[key]
+        if now - last < DEDUP_WINDOW:
+            return False        
+        ALERT_CACHE[key] = now    
+    return True
 
 def rotate_randam_conpot():
     number_rotate = random.randint(1,10)
