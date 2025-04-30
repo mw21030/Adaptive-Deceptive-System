@@ -180,7 +180,7 @@ def process_alert(alert):
             return        
         tag, msg, src_ip, dst_ip = alert_info.groups()
         if not should_process(tag, msg, src_ip, dst_ip):
-            logging.info("Dedup-drop <%s %s %s→%s>", tag, msg, src_ip, dst_ip)
+            logging.info("Dedup-drop <%s %s %s to %s>", tag, msg, src_ip, dst_ip)
             return
         if alert_info.group(1) == 'scan' or alert_info.group(1) == 'icmp':
             for _ in range(3):
