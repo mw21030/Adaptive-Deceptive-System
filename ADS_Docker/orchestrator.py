@@ -42,17 +42,29 @@ def start_base_conpot():
     subprocess.Popen("sudo docker-compose up -d", shell=True, start_new_session=True, stdin=subprocess.DEVNULL)
 
 def cleanup():
-    stop_event.set()          
-    for t in TIMER_REGISTRY:
-        t.cancel()            
-    logging.info("All timers cancelled.")
+    stop_event.set()
+    logging.info("Shutting down orchestrator...")
 
-    subprocess.run("sudo docker-compose down", shell=True, stdin=subprocess.DEVNULL)
+    # Cancel timers
+    for t in TIMER_REGISTRY:
+        t.cancel()
+    logging.info("All timers cancelled.")
+    try:
+        logging.info("Stopping docker-compose services...")
+        result = subprocess.run("sudo docker-compose down", shell=True,stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=15)
+        if result.returncode != 0:
+            logging.warning("docker-compose down failed: %s", result.stderr.decode().strip())
+        else:
+            logging.info("docker-compose down completed successfully.")
+    except subprocess.TimeoutExpired:
+        logging.error("docker-compose down timed out. Forcing container shutdown...")
     with deploy_lock:
         for deploy in list(deploy_conpot.keys()):
+            logging.info(f"Removing container: {deploy}")
             subprocess.run(f"docker rm -f {deploy}", shell=True, stdin=subprocess.DEVNULL)
-            subprocess.run(f"rm -r ./Honeypot/Templates/{deploy}", shell=True, stdin=subprocess.DEVNULL)
+            subprocess.run(f"rm -rf ./Honeypot/Templates/{deploy}", shell=True, stdin=subprocess.DEVNULL)
             subprocess.run(f"docker rmi -f {deploy}:latest", shell=True, stdin=subprocess.DEVNULL)
+        deploy_conpot.clear()
     logging.info("Cleanup completed.")
 
 def reconfigure_conpot(template_name, alter_IP=False):
