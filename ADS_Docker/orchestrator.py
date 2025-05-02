@@ -226,7 +226,7 @@ def process_alert(alert):
                 template_name = matching_templates[0]
                 reconfigure_conpot(template_name,alter_IP=True)
         elif alert_info.group(2) == "potential volumetric attack detected":
-            for _ in range(6):
+            for _ in range(3):
                 port = random.choice([502, 102, 44818])
                 deploying.append(executor.submit(deploy_instance_for_alert, port))
         concurrent.futures.wait(deploying)
