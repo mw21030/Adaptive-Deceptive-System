@@ -79,18 +79,18 @@ def start_server():
         sock.listen(5)
         logging.info(f"Server listening on {HOST}:{PORT}")
 
-        with context.wrap_socket(sock, server_side=True) as ssock:
-            while True:
-                try:
-                    conn, addr = ssock.accept()
+        while True:
+            try:
+                raw_conn, addr = sock.accept()
+                with context.wrap_socket(raw_conn, server_side=True) as conn:
                     data = conn.recv(4096)
                     if data:
                         alert = data.decode()
                         logging.info(f"Received alert: {alert}")
                         process_alert(alert)
-                    conn.close()
-                except Exception as e:
-                    logging.error("Error: %s", e)
+            except Exception as e:
+                logging.error("Error: %s", e)
+
 
 def rotate_conpot(template_name):
     with deploy_lock:
@@ -288,16 +288,16 @@ def random_reconfig():
     _start_timer(mins*60, random_reconfigure)
     _start_timer(mins*60, random_reconfig)
 
-rotate()
-random_reconfig()
-
 if __name__ == "__main__":
     try:
         logging.info("Starting conpot instances...")
         start_base_conpot()
+        rotate()
+        random_reconfig()
         logging.info("Starting orchestrator...")
         start_server()
     except KeyboardInterrupt:
         logging.info("Stopping orchestrator...")
     finally:
         cleanup()
+
